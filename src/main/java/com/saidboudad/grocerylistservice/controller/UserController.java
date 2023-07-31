@@ -1,27 +1,25 @@
 package com.saidboudad.grocerylistservice.controller;
 
+import com.saidboudad.grocerylistservice.entity.ShoppingList;
 import com.saidboudad.grocerylistservice.entity.User;
+import com.saidboudad.grocerylistservice.service.shppinglistService.ShoppingListService;
 import com.saidboudad.grocerylistservice.service.user.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
+    private final ShoppingListService shoppingListService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, ShoppingListService shoppingListService) {
         this.userService = userService;
-    }
-
-    // Endpoint to get the currently authenticated user details
-    @GetMapping("/current")
-    public ResponseEntity<UserDetails> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
-        return ResponseEntity.ok(userDetails);
+        this.shoppingListService = shoppingListService;
     }
 
     // Endpoint to create a new user
@@ -62,6 +60,13 @@ public class UserController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    // Endpoint to get shopping lists for a specific user by ID
+    @GetMapping("/{userId}/lists")
+    public ResponseEntity<List<ShoppingList>> getShoppingListsForUser(@PathVariable Long userId) {
+        List<ShoppingList> shoppingLists = shoppingListService.getShoppingListsByUserId(userId);
+        return ResponseEntity.ok(shoppingLists);
     }
 
 

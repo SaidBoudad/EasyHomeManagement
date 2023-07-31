@@ -1,5 +1,6 @@
 package com.saidboudad.grocerylistservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,6 +42,7 @@ public class Item {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false) // foreign key to the User entity
+    @JsonIgnore
     private User user;
 }
 enum Category {

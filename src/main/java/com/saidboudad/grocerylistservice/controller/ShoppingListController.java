@@ -16,14 +16,14 @@ public class ShoppingListController {
         this.shoppingListService = shoppingListService;
     }
 
-    // Endpoint to create a new shopping list
+    // Endpoint to get a specific shopping list by ID
+
     @PostMapping
     public ResponseEntity<ShoppingList> createShoppingList(@RequestBody ShoppingList shoppingList) {
         ShoppingList createdList = shoppingListService.createShoppingList(shoppingList);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdList);
     }
 
-    // Endpoint to get a specific shopping list by ID
     @GetMapping("/{listId}")
     public ResponseEntity<ShoppingList> getShoppingListById(@PathVariable Long listId) {
         ShoppingList shoppingList = shoppingListService.getShoppingListById(listId);
@@ -34,7 +34,6 @@ public class ShoppingListController {
         }
     }
 
-    // Endpoint to update an existing shopping list
     @PutMapping("/{listId}")
     public ResponseEntity<ShoppingList> updateShoppingList(@PathVariable Long listId, @RequestBody ShoppingList shoppingList) {
         ShoppingList updatedList = shoppingListService.updateShoppingList(listId, shoppingList);
@@ -45,7 +44,6 @@ public class ShoppingListController {
         }
     }
 
-    // Endpoint to delete a shopping list by ID
     @DeleteMapping("/{listId}")
     public ResponseEntity<Void> deleteShoppingList(@PathVariable Long listId) {
         boolean deleted = shoppingListService.deleteShoppingListById(listId);
@@ -55,5 +53,4 @@ public class ShoppingListController {
             return ResponseEntity.notFound().build();
         }
     }
-
 }

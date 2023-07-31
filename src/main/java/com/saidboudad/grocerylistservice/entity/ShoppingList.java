@@ -1,11 +1,12 @@
 package com.saidboudad.grocerylistservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -17,11 +18,15 @@ public class ShoppingList {
     @GeneratedValue
     private Long id;
 
-    @Column(name = "quantity", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name="numberOfItems")
+    private int numberOfItem;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false) // foreign key to the User entity
+    @JsonIgnore
     private User user;
 
     @OneToMany(mappedBy = "shoppingList", targetEntity = Item.class)
@@ -29,10 +34,17 @@ public class ShoppingList {
 
     @Column(name = "date_created", updatable = false)
     @CreationTimestamp
-    private LocalDate dateCreated;
+    private LocalDateTime dateCreated;
 
     @Column(name = "date_modified", updatable = false)
     @CreationTimestamp
-    private LocalDate dateModified;
+    private LocalDateTime dateModified;
+
+
+    @PreUpdate
+    @PreRemove
+    private void updateNumberOfItems() {
+        numberOfItem = items.size(); // Assuming you have a List<Item> items field
+    }
 }
 

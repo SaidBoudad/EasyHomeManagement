@@ -10,12 +10,11 @@ import java.util.List;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
-    // Custom query method to find items by user
-    List<Item> findByUser(User user);
 
     // Custom query method to find a specific item by its ID and user
     Item findByIdAndUser(Long itemId, User user);
 
     // Custom query method to delete a specific item by its ID and user
     void deleteByIdAndUser(Long itemId, User user);
+    List<Item> findByUserId(Long userId);
 }

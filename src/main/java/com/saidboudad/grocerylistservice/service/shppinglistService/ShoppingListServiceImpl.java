@@ -4,6 +4,9 @@ import com.saidboudad.grocerylistservice.entity.ShoppingList;
 import com.saidboudad.grocerylistservice.repository.ShoppingListRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Service
 public class ShoppingListServiceImpl implements ShoppingListService {
 
@@ -28,9 +31,7 @@ public class ShoppingListServiceImpl implements ShoppingListService {
         ShoppingList existingList = shoppingListRepository.findById(listId).orElse(null);
         if (existingList != null) {
             existingList.setName(shoppingList.getName());
-            existingList.setItems(shoppingList.getItems());
-            // Update other properties as needed
-
+            existingList.setDateModified(LocalDateTime.now());
             return shoppingListRepository.save(existingList);
         }
         return null;
@@ -45,6 +46,11 @@ public class ShoppingListServiceImpl implements ShoppingListService {
         return false;
     }
 
+    // Method to get all shopping lists for a specific user by ID
+    @Override
+    public List<ShoppingList> getShoppingListsByUserId(Long userId) {
+        return shoppingListRepository.findByUserId(userId);
+    }
 
 }
 

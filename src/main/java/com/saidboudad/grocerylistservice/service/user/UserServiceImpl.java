@@ -1,27 +1,26 @@
 package com.saidboudad.grocerylistservice.service.user;
 
+import com.saidboudad.grocerylistservice.entity.ShoppingList;
 import com.saidboudad.grocerylistservice.entity.User;
 import com.saidboudad.grocerylistservice.repository.UserRepository;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collections;
+import java.util.List;
 
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public User createUser(User user) {
-        // Encode the user's password before saving it to the database
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
@@ -31,18 +30,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
-
-    @Override
     public User updateUser(Long userId, User user) {
         User existingUser = userRepository.findById(userId).orElse(null);
         if (existingUser != null) {
             existingUser.setUsername(user.getUsername());
             existingUser.setEmail(user.getEmail());
             // If you want to allow updating the password, you can do so here.
-            // Don't forget to encode the new password using the passwordEncoder.
+            // Don't forget to handle password encoding, similar to the previous implementation.
 
             return userRepository.save(existingUser);
         }
@@ -58,5 +52,14 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
-    // Other methods implementation as needed...
+    // Method to get all shopping lists for a specific user by ID
+    @Override
+    public List<ShoppingList> getShoppingListsByUserId(Long userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        if (user != null) {
+            return user.getShoppingLists();
+        }
+        return Collections.emptyList();
+    }
+
 }
