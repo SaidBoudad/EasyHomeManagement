@@ -16,14 +16,13 @@ public class ShoppingListController {
         this.shoppingListService = shoppingListService;
     }
 
-    // Endpoint to get a specific shopping list by ID
-
     @PostMapping
     public ResponseEntity<ShoppingList> createShoppingList(@RequestBody ShoppingList shoppingList) {
         ShoppingList createdList = shoppingListService.createShoppingList(shoppingList);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdList);
     }
 
+    // Endpoint to get a specific shopping list by ID
     @GetMapping("/{listId}")
     public ResponseEntity<ShoppingList> getShoppingListById(@PathVariable Long listId) {
         ShoppingList shoppingList = shoppingListService.getShoppingListById(listId);

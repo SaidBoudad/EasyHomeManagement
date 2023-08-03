@@ -15,7 +15,8 @@ import java.util.List;
 public class ShoppingList {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "shopping_list_seq")
+    @SequenceGenerator(name = "shopping_list_seq", sequenceName = "shopping_list_seq", initialValue = 100, allocationSize = 1)
     private Long id;
 
     @Column(name = "name", nullable = false)
@@ -37,7 +38,7 @@ public class ShoppingList {
     private LocalDateTime dateCreated;
 
     @Column(name = "date_modified", updatable = false)
-    @CreationTimestamp
+    @UpdateTimestamp
     private LocalDateTime dateModified;
 
 

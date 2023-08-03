@@ -35,8 +35,8 @@ public class UserServiceImpl implements UserService {
         if (existingUser != null) {
             existingUser.setUsername(user.getUsername());
             existingUser.setEmail(user.getEmail());
-            // If you want to allow updating the password, you can do so here.
-            // Don't forget to handle password encoding, similar to the previous implementation.
+            existingUser.setPassword(user.getPassword());
+            // Don't forget to handle password encoding.
 
             return userRepository.save(existingUser);
         }
