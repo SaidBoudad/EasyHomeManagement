@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ShoppingListService {
 
-    ShoppingList createShoppingList(ShoppingList shoppingList);
+    public ShoppingList createShoppingList(String name, Long userId) throws UserNotFoundException;
     ShoppingList getShoppingListById(Long listId);
     ShoppingList updateShoppingList(Long listId, ShoppingList shoppingList);
     boolean deleteShoppingListById(Long listId);

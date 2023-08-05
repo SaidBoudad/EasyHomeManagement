@@ -1,5 +1,6 @@
 package com.saidboudad.grocerylistservice.controller;
 
+import com.saidboudad.grocerylistservice.DTOs.UserDTO;
 import com.saidboudad.grocerylistservice.entity.ShoppingList;
 import com.saidboudad.grocerylistservice.entity.User;
 import com.saidboudad.grocerylistservice.service.shppinglistService.ShoppingListService;
@@ -24,17 +25,19 @@ public class UserController {
 
     // Endpoint to create a new user
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<UserDTO> createUser(@RequestBody User user) {
         User createdUser = userService.createUser(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+        UserDTO createdUserDTO = createdUser.toDTO();
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdUserDTO);
     }
 
     // Endpoint to get a specific user by ID
     @GetMapping("/{userId}")
-    public ResponseEntity<User> getUserById(@PathVariable Long userId) {
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long userId) {
         User user = userService.getUserById(userId);
         if (user != null) {
-            return ResponseEntity.ok(user);
+            UserDTO userDTO = user.toDTO();
+            return ResponseEntity.ok(userDTO);
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -42,10 +45,11 @@ public class UserController {
 
     // Endpoint to update an existing user
     @PutMapping("/{userId}")
-    public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User user) {
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long userId, @RequestBody User user) {
         User updatedUser = userService.updateUser(userId, user);
         if (updatedUser != null) {
-            return ResponseEntity.ok(updatedUser);
+            UserDTO updatedUserDTO = updatedUser.toDTO();
+            return ResponseEntity.ok(updatedUserDTO);
         } else {
             return ResponseEntity.notFound().build();
         }

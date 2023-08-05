@@ -1,6 +1,7 @@
 package com.saidboudad.grocerylistservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.saidboudad.grocerylistservice.DTOs.UserDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,4 +37,13 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<ShoppingList> shoppingLists;
+
+    public UserDTO toDTO() {
+        UserDTO dto = new UserDTO();
+        dto.setId(this.id);
+        dto.setUsername(this.username);
+        dto.setEmail(this.email);
+
+        return dto;
+    }
 }

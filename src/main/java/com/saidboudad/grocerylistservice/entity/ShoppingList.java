@@ -1,12 +1,15 @@
 package com.saidboudad.grocerylistservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.saidboudad.grocerylistservice.DTOs.UserDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -31,21 +34,34 @@ public class ShoppingList {
     private User user;
 
     @OneToMany(mappedBy = "shoppingList", targetEntity = Item.class)
-    private List<Item> items;
+    private List<Item> items = new ArrayList<>(); // Initialize the items list
 
     @Column(name = "date_created", updatable = false)
     @CreationTimestamp
     private LocalDateTime dateCreated;
 
-    @Column(name = "date_modified", updatable = false)
+    @Column(name = "date_modified")
     @UpdateTimestamp
     private LocalDateTime dateModified;
 
+    //Will not be persisted in the database. It will only be available during the lifetime of the ShoppingList object.
+    @Transient
+    private String lastChange;
+
+    @Transient
+    private UserDTO userDTO;
+
+    public void setUserDTO(UserDTO userDTO) {
+        this.userDTO = userDTO;
+    }
 
     @PreUpdate
     @PreRemove
     private void updateNumberOfItems() {
-        numberOfItem = items.size(); // Assuming you have a List<Item> items field
+        if (items != null) {
+            numberOfItem = items.size();
+        }
     }
+
 }
 
