@@ -1,6 +1,6 @@
 package com.saidboudad.grocerylistservice.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.saidboudad.grocerylistservice.DTOs.UserDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,12 +30,12 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @JsonIgnore
+    @JsonManagedReference
     private List<Item> items;
 
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @JsonIgnore
+    @JsonManagedReference
     private List<ShoppingList> shoppingLists;
 
     public UserDTO toDTO() {

@@ -2,7 +2,7 @@ package com.saidboudad.grocerylistservice.controller;
 
 import com.saidboudad.grocerylistservice.DTOs.ShoppingListRequest;
 import com.saidboudad.grocerylistservice.entity.ShoppingList;
-import com.saidboudad.grocerylistservice.repository.UserRepository;
+import com.saidboudad.grocerylistservice.repository.ShoppingListRepository;
 import com.saidboudad.grocerylistservice.service.shppinglistService.ShoppingListService;
 import com.saidboudad.grocerylistservice.service.shppinglistService.UserNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -10,17 +10,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/shoppingLists")
+@RequestMapping("/shoppingList")
 public class ShoppingListController {
 
     private final ShoppingListService shoppingListService;
+    private final ShoppingListRepository shoppingListRepository;
 
 
-    public ShoppingListController(ShoppingListService shoppingListService, UserRepository userRepository) {
+    public ShoppingListController(ShoppingListService shoppingListService, ShoppingListRepository shoppingListRepository) {
         this.shoppingListService = shoppingListService;
+        this.shoppingListRepository = shoppingListRepository;
     }
 
-    // Endpoint to create specific shopping the request body has the list name and the user id
+    // Endpoint to create specific shoppingList the request body has the listName and the userId
     @PostMapping
     public ResponseEntity<ShoppingList> createShoppingList(@RequestBody ShoppingListRequest request) throws UserNotFoundException {
         try{
@@ -48,6 +50,7 @@ public class ShoppingListController {
         }
     }
 
+    // Endpoint to update a shoppingList by listId as a pathVariable
     @PutMapping("/{listId}")
     public ResponseEntity<ShoppingList> updateShoppingList(@PathVariable Long listId, @RequestBody ShoppingList shoppingList) {
         ShoppingList updatedList = shoppingListService.updateShoppingList(listId, shoppingList);
@@ -70,6 +73,5 @@ public class ShoppingListController {
             return ResponseEntity.notFound().build();
         }
     }
-
 
 }

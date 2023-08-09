@@ -10,6 +10,7 @@ public interface ShoppingListService {
     ShoppingList getShoppingListById(Long listId);
     ShoppingList updateShoppingList(Long listId, ShoppingList shoppingList);
     boolean deleteShoppingListById(Long listId);
+
     List<ShoppingList> getShoppingListsByUserId(Long userId);
 
 

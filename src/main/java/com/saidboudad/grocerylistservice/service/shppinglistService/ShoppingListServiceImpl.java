@@ -31,8 +31,8 @@ public class ShoppingListServiceImpl implements ShoppingListService {
             ShoppingList shoppingList = new ShoppingList();
             shoppingList.setName(name);
             shoppingList.setUser(user);
-            // set other properties if needed
             shoppingListRepository.save(shoppingList);
+            System.out.println(shoppingList.getId().toString()+"  after ");
             shoppingList.setUserDTO(user.toDTO());
             return shoppingList;
         } else {
@@ -55,7 +55,6 @@ public class ShoppingListServiceImpl implements ShoppingListService {
             return null;
         }
     }
-
 
     @Transactional
     @Override
@@ -133,7 +132,5 @@ public class ShoppingListServiceImpl implements ShoppingListService {
 
         return shoppingLists;
     }
-
-
 }
 
