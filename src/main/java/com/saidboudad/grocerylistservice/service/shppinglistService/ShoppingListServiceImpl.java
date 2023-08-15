@@ -3,6 +3,7 @@ package com.saidboudad.grocerylistservice.service.shppinglistService;
 import com.saidboudad.grocerylistservice.DTOs.UserDTO;
 import com.saidboudad.grocerylistservice.entity.ShoppingList;
 import com.saidboudad.grocerylistservice.entity.User;
+import com.saidboudad.grocerylistservice.exceptions.UserNotFoundException;
 import com.saidboudad.grocerylistservice.repository.ShoppingListRepository;
 import com.saidboudad.grocerylistservice.repository.UserRepository;
 import org.springframework.stereotype.Service;

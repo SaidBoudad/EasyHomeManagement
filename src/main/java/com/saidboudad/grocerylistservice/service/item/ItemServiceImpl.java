@@ -7,7 +7,7 @@ import com.saidboudad.grocerylistservice.entity.User;
 import com.saidboudad.grocerylistservice.repository.ItemRepository;
 import com.saidboudad.grocerylistservice.repository.ShoppingListRepository;
 import com.saidboudad.grocerylistservice.repository.UserRepository;
-import com.saidboudad.grocerylistservice.service.shppinglistService.UserNotFoundException;
+import com.saidboudad.grocerylistservice.exceptions.UserNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -77,10 +77,10 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional
     public boolean deleteItemById(Long itemId) {
         if (itemRepository.existsById(itemId)) {
             itemRepository.deleteById(itemId);
-            System.out.println(itemRepository.findById(itemId).get().getName());
             return true;
         }
         return false;

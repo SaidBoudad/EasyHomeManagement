@@ -4,7 +4,7 @@ import com.saidboudad.grocerylistservice.DTOs.ShoppingListRequest;
 import com.saidboudad.grocerylistservice.entity.ShoppingList;
 import com.saidboudad.grocerylistservice.repository.ShoppingListRepository;
 import com.saidboudad.grocerylistservice.service.shppinglistService.ShoppingListService;
-import com.saidboudad.grocerylistservice.service.shppinglistService.UserNotFoundException;
+import com.saidboudad.grocerylistservice.exceptions.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

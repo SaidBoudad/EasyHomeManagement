@@ -1,4 +1,4 @@
-package com.saidboudad.grocerylistservice.service.shppinglistService;
+package com.saidboudad.grocerylistservice.exceptions;
 
 public class UserNotFoundException extends RuntimeException {
     public UserNotFoundException(Long userId) {

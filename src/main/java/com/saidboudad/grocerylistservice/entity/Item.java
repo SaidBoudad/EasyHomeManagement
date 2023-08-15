@@ -1,6 +1,8 @@
 package com.saidboudad.grocerylistservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.saidboudad.grocerylistservice.DTOs.Category;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -42,6 +44,6 @@ public class Item {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false) // foreign key to the User entity
-    @JsonBackReference // Do not serialize this property
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private User user;
 }

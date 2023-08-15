@@ -1,6 +1,7 @@
 package com.saidboudad.grocerylistservice.service.shppinglistService;
 
 import com.saidboudad.grocerylistservice.entity.ShoppingList;
+import com.saidboudad.grocerylistservice.exceptions.UserNotFoundException;
 
 import java.util.List;
 

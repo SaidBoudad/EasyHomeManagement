@@ -7,6 +7,7 @@ import com.saidboudad.grocerylistservice.service.shppinglistService.ShoppingList
 import com.saidboudad.grocerylistservice.service.user.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -71,6 +72,7 @@ public class ItemController {
 
 
     @DeleteMapping("/{itemId}")
+    @Transactional
     public ResponseEntity<Void> deleteItem(@PathVariable Long itemId) {
         boolean deleted = itemService.deleteItemById(itemId);
         if (deleted) {
