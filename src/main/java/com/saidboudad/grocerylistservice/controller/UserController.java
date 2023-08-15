@@ -3,15 +3,18 @@ package com.saidboudad.grocerylistservice.controller;
 import com.saidboudad.grocerylistservice.DTOs.UserDTO;
 import com.saidboudad.grocerylistservice.entity.ShoppingList;
 import com.saidboudad.grocerylistservice.entity.User;
+import com.saidboudad.grocerylistservice.exceptions.DuplicateEmailException;
+import com.saidboudad.grocerylistservice.exceptions.DuplicateUsernameException;
 import com.saidboudad.grocerylistservice.service.shppinglistService.ShoppingListService;
 import com.saidboudad.grocerylistservice.service.user.UserService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/users")
 public class UserController {
 
@@ -23,12 +26,26 @@ public class UserController {
         this.shoppingListService = shoppingListService;
     }
 
+    // GET mapping method to display the user creation form
+    @GetMapping("/create")
+    public String showCreateUserForm(Model model) {
+        model.addAttribute("user", new User());
+        return "create-user"; // Return the view name for the form page
+    }
+
     // Endpoint to create a new user
     @PostMapping
-    public ResponseEntity<UserDTO> createUser(@RequestBody User user) {
-        User createdUser = userService.createUser(user);
-        UserDTO createdUserDTO = createdUser.toDTO();
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdUserDTO);
+    public String createUser(@ModelAttribute User user, Model model) {
+        try {
+            User createdUser = userService.createUser(user);
+            model.addAttribute("createdUserDTO", createdUser.toDTO());
+            model.addAttribute("successMessage", "User created successfully!");
+        } catch (DuplicateEmailException e) {
+            model.addAttribute("errorMessage", "Email already exists.");
+        } catch (DuplicateUsernameException e) {
+            model.addAttribute("errorMessage", "Username already exists.");
+        }
+        return "create-user";
     }
 
     // Endpoint to get a specific user by ID

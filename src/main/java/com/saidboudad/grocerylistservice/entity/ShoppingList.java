@@ -1,8 +1,7 @@
 package com.saidboudad.grocerylistservice.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.saidboudad.grocerylistservice.DTOs.UserDTO;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -32,7 +31,7 @@ public class ShoppingList {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false) // foreign key to the User entity
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonBackReference
     private User user;
 
     @OneToMany(mappedBy = "shoppingList",cascade = CascadeType.ALL, orphanRemoval = true)

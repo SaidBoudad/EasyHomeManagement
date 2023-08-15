@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
             return userRepository.save(existingUser);
         }
 
-            return null;
+        return null;
     }
 
     @Override
@@ -86,50 +86,5 @@ public class UserServiceImpl implements UserService {
         }
         return Collections.emptyList();
     }
-
-
-
-
-
-
-
-
-
-
-
-    // GET mapping method to display the user creation form
-//    @GetMapping("/create")
-//    public String showCreateUserForm(Model model) {
-//        model.addAttribute("user", new User());
-//        return "create-user"; // Return the view name for the form page
-//    }
-
-    // Endpoint to create a new user
-//    @PostMapping
-//    public String createUser(@ModelAttribute User user, Model model) {
-//        try {
-//            User createdUser = userService.createUser(user);
-//            model.addAttribute("createdUserDTO", createdUser.toDTO());
-//            model.addAttribute("successMessage", "User created successfully!");
-//        } catch (DuplicateEmailException e) {
-//            model.addAttribute("errorMessage", "Email already exists.");
-//        } catch (DuplicateUsernameException e) {
-//            model.addAttribute("errorMessage", "Username already exists.");
-//        }
-//        return "create-user";
-//    }
-
-
-
-
-
-
-    // Endpoint to create a new user
-//    @PostMapping
-//    public ResponseEntity<UserDTO> createUser(@RequestBody User user) {
-//        User createdUser = userService.createUser(user);
-//        UserDTO createdUserDTO = createdUser.toDTO();
-//        return ResponseEntity.status(HttpStatus.CREATED).body(createdUserDTO);
-//    }
 
 }
