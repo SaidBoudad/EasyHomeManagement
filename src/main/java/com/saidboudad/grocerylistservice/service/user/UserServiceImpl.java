@@ -94,9 +94,9 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
-    public Page<User> getUsersByPage(int page, int size) {
+    public Page<User> getUsersByPage(String keyword ,int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return userRepository.findAll(pageable);
+        return userRepository.findByUsernameContains(keyword,pageable);
     }
 
 
