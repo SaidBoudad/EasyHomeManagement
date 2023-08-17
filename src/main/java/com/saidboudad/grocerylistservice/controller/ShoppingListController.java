@@ -7,6 +7,7 @@ import com.saidboudad.grocerylistservice.service.shppinglistService.ShoppingList
 import com.saidboudad.grocerylistservice.exceptions.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,6 +24,17 @@ public class ShoppingListController {
     }
 
     // Endpoint to create specific shoppingList the request body has the listName and the userId
+
+    @GetMapping("/home")
+    public String home(Model model) {
+        return "home-page";
+    }
+
+    @GetMapping("/lists")
+    public String lists(Model model) {
+        return "shoppingLists";
+    }
+
     @PostMapping
     public ResponseEntity<ShoppingList> createShoppingList(@RequestBody ShoppingListRequest request) throws UserNotFoundException {
         try{

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Grocery List Service</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<!--    <link rel="stylesheet" href=" webjars/bootstrap/5.1.3/css/bootstrap.min.css">-->
+</head>"
+<body>
+<div class="container mt-2 ">
+    <div class="row">
+        <h1>List Of Users</h1>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <a href="http://localhost:8088/users/create" class="btn btn-secondary">Add User</a>
+        </div>
+        <br>
+    </div>
+    <table class="table table-dark table-border">
+        <thead class="table-dark">
+        <tr>
+            <th>User Name</th>
+            <th>User Email</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="user:${usersPage}">
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.email}"></td>
+            <td>
+                <a th:href="@{/users/edit/{id}(id=${user.id})}"  class="btn btn-primary">Update</a>
+
+                <a th:href="@{/users/delete/{id}(id=${user.id})}"  class="btn btn-danger">Delete</a>
+            </td>
+    </table>
+    <ul class="nav nav-pills">
+        <li th:each="page,status:${pages}">
+            <a th:class="${status.index==currentPage?'btn btn-primary ms-1':'btn btn-outline-primary m-1'}"
+               th:text="${status.index}"
+               th:href="@{users(page=${status.index})}"
+            ></a>
+        </li>
+    </ul>
+
+</div>
+
+</div>
+
+</body>
+</html>

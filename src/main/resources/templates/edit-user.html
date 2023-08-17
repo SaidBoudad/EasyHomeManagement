@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Grocery List Service</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-mg-6 col-md-6 container justify-content-center card">
+            <h1 class="text-center">Update User</h1>
+            <div class="card-body">
+                <form th:action="@{/users/{id}(id=${user.id})}" th:object="${user}" method="POST">
+                    <div class="form-group">
+                        <label>User Name</label>
+                        <input
+                                type="text"
+                                name="username"
+                                th:field = "*{username}"
+                                class="form-control"
+                                placeholder="Enter User Name">
+                    </div>
+                    <div class="form-group">
+                        <label>User Email</label>
+                        <input
+                                type="text"
+                                name="email"
+                                th:field = "*{email}"
+                                class="form-control"
+                                placeholder="Enter User email">
+                    </div>
+                    <div class="form-group">
+                        <label>User new Password</label>
+                        <input
+                                type="text"
+                                name="password"
+                                th:field = "*{password}"
+                                class="form-control"
+                                placeholder="Enter User New Password">
+                    </div>
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

@@ -8,6 +8,7 @@ import com.saidboudad.grocerylistservice.service.user.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +26,11 @@ public class ItemController {
         this.itemService = itemService;
         this.shoppingListService = shoppingListService;
         this.userService = userService;
+    }
+
+    @GetMapping("/home")
+    public String home(Model model) {
+        return "home-page";
     }
 
     @GetMapping("/{itemId}")

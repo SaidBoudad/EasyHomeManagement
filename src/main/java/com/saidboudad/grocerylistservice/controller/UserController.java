@@ -7,6 +7,7 @@ import com.saidboudad.grocerylistservice.exceptions.DuplicateEmailException;
 import com.saidboudad.grocerylistservice.exceptions.DuplicateUsernameException;
 import com.saidboudad.grocerylistservice.service.shppinglistService.ShoppingListService;
 import com.saidboudad.grocerylistservice.service.user.UserService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,11 +20,17 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+
     private final ShoppingListService shoppingListService;
 
     public UserController(UserService userService, ShoppingListService shoppingListService) {
         this.userService = userService;
         this.shoppingListService = shoppingListService;
+    }
+
+    @GetMapping("/home")
+    public String home(Model model) {
+        return "home-page";
     }
 
     // GET mapping method to display the user creation form
@@ -90,5 +97,44 @@ public class UserController {
         return ResponseEntity.ok(shoppingLists);
     }
 
+
+    //because the html don't support delete endpoint i used this post request to handle delete request
+
+    @GetMapping("/delete/{id}")
+    public String deleteStudent(@PathVariable Long id){
+        userService.deleteUserById(id);
+        return "redirect:/users";
+    }
+
+    //method handler to handel list students and return model and view
+
+    @GetMapping
+    public String listUsers(Model model,
+                            @RequestParam(name = "page", defaultValue = "0") int page,
+                            @RequestParam(name = "size", defaultValue = "5") int size) {
+        Page<User> usersPage = userService.getUsersByPage(page, size);
+        model.addAttribute("usersPage", usersPage.getContent());
+        model.addAttribute("pages",new int[usersPage.getTotalPages()]);
+        model.addAttribute("setPage",page);
+        return "users";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editeStudent(@PathVariable Long id,Model model){
+        model.addAttribute("user",userService.getUserById(id));
+        return "edit_student";
+    }
+    @PostMapping("/edit/{id}")
+    public String updateStudent(@PathVariable Long id,@ModelAttribute("user") User user,Model model){
+        //get user from DB by id
+        User existingUser = userService.getUserById(id);
+        existingUser.setId(id);
+        existingUser.setUsername(user.getUsername());
+        existingUser.setEmail(user.getEmail());
+        existingUser.setPassword(user.getPassword());
+        //save updated user object
+        userService.createUser(existingUser);
+        return "redirect:/users";
+    }
 
 }

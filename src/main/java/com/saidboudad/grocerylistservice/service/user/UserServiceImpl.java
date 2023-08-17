@@ -5,6 +5,9 @@ import com.saidboudad.grocerylistservice.entity.User;
 import com.saidboudad.grocerylistservice.exceptions.DuplicateEmailException;
 import com.saidboudad.grocerylistservice.exceptions.DuplicateUsernameException;
 import com.saidboudad.grocerylistservice.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -86,5 +89,15 @@ public class UserServiceImpl implements UserService {
         }
         return Collections.emptyList();
     }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+    public Page<User> getUsersByPage(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return userRepository.findAll(pageable);
+    }
+
 
 }
