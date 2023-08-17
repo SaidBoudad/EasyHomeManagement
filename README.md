@@ -13,7 +13,7 @@ Buying planning: Suggesting a buying plan based on the budget and priority of it
 
 Design the Database: Plan the structure of our database to store information about items, their categories, stock levels, prices, and any other relevant details. A well-organized database will make it easier to retrieve and manipulate data in our application.
 
-Choose a Technology Stack: Select the appropriate technologies for our web application. We will use popular web development frameworks Java17 and spring boot 3.1.2 , and thymeleaf for the frontend.
+Choose a Technology Stack: Select the appropriate technologies for our web application. We will use popular web development frameworks Java17 and spring boot 3.1.2 , and thymeleaf for the frontend(thymeleaf is a server-side Java template engine that allows you to create dynamic web pages by blending your HTML templates with Java code. It acts as a "motor" or engine for rendering templates, where you can embed dynamic data and expressions directly into your HTML templates using Thymeleaf's syntax. Thymeleaf templates are processed on the server side to generate the final HTML content that is sent to the client's browser. This allows you to create dynamic and data-driven web pages without needing to write extensive JavaScript code on the client side.).
 
 Develop the Backend: Implement the backend logic to handle inventory management, budget tracking, and buying planning. This involves creating APIs to interact with the database and handle user requests.
 
