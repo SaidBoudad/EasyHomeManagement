@@ -8,6 +8,7 @@ import com.saidboudad.grocerylistservice.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +43,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Long userId) {
         return userRepository.findById(userId).orElse(null);
+
     }
 
     @Override
@@ -94,9 +96,11 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
-    public Page<User> getUsersByPage(String keyword ,int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
+    public Page<User> getUsersByPage(String keyword ,int page, int size,String sortOrder) {
+        Sort sort = Sort.by(Sort.Direction.fromString(sortOrder), "id"); // Create Sort object
+        Pageable pageable = PageRequest.of(page, size, sort); // Apply sort to pageable
         return userRepository.findByUsernameContains(keyword,pageable);
+
     }
 
 

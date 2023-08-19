@@ -1,60 +1,71 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template-navbar"
+>
 <head>
     <meta charset="UTF-8">
     <title>Grocery List Service</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
-<body
-
+<body>
+<div layout:fragment="content1">
 <!-- Display error message -->
-<div th:if="${errorMessage}" class="alert alert-danger">
+    <div th:if="${errorMessage}" class="alert alert-danger">
     <p th:text="${errorMessage}"></p>
-</div>
+    </div>
 
 <!-- Display success message -->
-<div th:if="${successMessage}" class="alert alert-success">
+    <div th:if="${successMessage}" class="alert alert-success">
     <p th:text="${successMessage}"></p>
-</div>
+    </div>
 
 
 <!-- form fields here -->
 
-<div class="container">
-    <div class="row justify-content-center">
+    <div class="container">
+      <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
                 <h1 class="card-header text-center">Create New User</h1>
                 <div class="card-body">
-                    <form th:action="@{/users}" th:object="${user}" method="POST">
+                    <form th:action="@{/users/save}" th:object="${user}" method="POST">
+
                         <div class="form-group">
                             <label>Username</label>
                             <input
                                     type="text"
                                     name="username"
-                                    th:field="*{username}"
+                                    th:value="${user.username}"
                                     class="form-control"
                                     placeholder="Enter Username">
+                            <span class="text-danger" th:errors="${user.username}"></span>
                         </div>
+
                         <div class="form-group">
                             <label>Email</label>
                             <input
-                                    type="email"
-                                    name="email"
-                                    th:field="*{email}"
-                                    class="form-control"
-                                    placeholder="Enter Email">
+                                type="email"
+                                name="email"
+                                th:value="${user.email}"
+                                class="form-control"
+                                placeholder="Enter Email">
+                            <span class="text-danger" th:errors="${user.email}"></span>
                         </div>
+
                         <div class="form-group">
                             <label>Password</label>
                             <input
                                     type="password"
                                     name="password"
-                                    th:field="*{password}"
+                                    th:value="${user.password}"
                                     class="form-control"
                                     placeholder="Enter Password">
+                            <span class="text-danger" th:errors="${user.password}"></span>
                         </div>
+
                         <div class="box-footer">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
@@ -62,6 +73,7 @@
                 </div>
             </div>
         </div>
+      </div>
     </div>
 
 
@@ -71,6 +83,6 @@
         <p><strong>Username:</strong> <span th:text="${createdUserDTO.username}"></span></p>
         <p><strong>Email:</strong> <span th:text="${createdUserDTO.email}"></span></p>
     </div>
-
-    </body>
+</div>
+</body>
 </html>

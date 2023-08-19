@@ -12,34 +12,52 @@
         <div class="col-mg-6 col-md-6 container justify-content-center card">
             <h1 class="text-center">Update User</h1>
             <div class="card-body">
-                <form th:action="@{/users/{id}(id=${user.id})}" th:object="${user}" method="POST">
+                <form th:action="@{/users/update(page=${page}, keyword=${keyword})}" th:object="${user}" method="POST">
+
                     <div class="form-group">
-                        <label>User Name</label>
+                        <label>User ID : </label>
+                        <lable th:text="${user.id}"></lable>
+                        <input
+                            type="hidden"
+                            name="id"
+                            th:field = "${user.id}"
+                            class="form-control"
+                            placeholder="Enter User ID">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Username</label>
                         <input
                                 type="text"
                                 name="username"
-                                th:field = "*{username}"
+                                th:value="${user.username}"
                                 class="form-control"
-                                placeholder="Enter User Name">
+                                placeholder="Enter Username">
+                        <span class="text-danger" th:errors="${user.username}"></span>
                     </div>
+
                     <div class="form-group">
-                        <label>User Email</label>
+                        <label>Email</label>
                         <input
-                                type="text"
+                                type="email"
                                 name="email"
-                                th:field = "*{email}"
+                                th:value="${user.email}"
                                 class="form-control"
-                                placeholder="Enter User email">
+                                placeholder="Enter Email">
+                        <span class="text-danger" th:errors="${user.email}"></span>
                     </div>
+
                     <div class="form-group">
-                        <label>User new Password</label>
+                        <label>Password</label>
                         <input
-                                type="text"
+                                type="password"
                                 name="password"
-                                th:field = "*{password}"
+                                th:value="${user.password}"
                                 class="form-control"
-                                placeholder="Enter User New Password">
+                                placeholder="Enter Password">
+                        <span class="text-danger" th:errors="${user.password}"></span>
                     </div>
+
                     <div class="box-footer">
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>

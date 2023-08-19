@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template-navbar"
+>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +12,7 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
+    <div layout:fragment="content1">
 <header>
     <nav class="navbar">
         <div class="container">
@@ -30,12 +35,6 @@
         <p>Organize your home, kitchen, and budget with ease!</p>
         <p>Here you can navigate to various sections of the app.</p>
         <a href="/signup" class="btn btn-primary">Get Started</a>
-
-        <!-- button for creating new user -->
-        <a href="http://localhost:8088/users/create" class="btn btn-secondary">Create New User</a>
-
-        <!-- button for getting to user page -->
-        <a href="/users" class="btn btn-secondary">All Users Page</a>
     </div>
 </section>
 
@@ -58,6 +57,7 @@
         <p>&copy; 2023 Your App. All rights reserved.</p>
     </div>
 </footer>
+    </div>
 </body>
 </html>
 

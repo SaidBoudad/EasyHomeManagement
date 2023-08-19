@@ -1,14 +1,21 @@
 package com.saidboudad.grocerylistservice.controller;
 
+import com.saidboudad.grocerylistservice.DTOs.UserDTO;
+import com.saidboudad.grocerylistservice.entity.ShoppingList;
 import com.saidboudad.grocerylistservice.entity.User;
 import com.saidboudad.grocerylistservice.exceptions.DuplicateEmailException;
 import com.saidboudad.grocerylistservice.exceptions.DuplicateUsernameException;
 import com.saidboudad.grocerylistservice.service.shppinglistService.ShoppingListService;
 import com.saidboudad.grocerylistservice.service.user.UserService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/users")
@@ -23,12 +30,6 @@ public class UserController {
         this.shoppingListService = shoppingListService;
     }
 
-    //Get home page
-    @GetMapping("/home")
-    public String home(Model model) {
-        return "home-page";
-    }
-
     // Display the user creation form
     @GetMapping("/create")
     public String showCreateUserForm(Model model) {
@@ -37,8 +38,9 @@ public class UserController {
     }
 
     // Endpoint to create a new user
-    @PostMapping
-    public String createUser(@ModelAttribute User user, Model model) {
+    @PostMapping("/save")
+    public String createUser( Model model, @Valid User user, BindingResult bindingResult) {
+        if(bindingResult.hasErrors())return "create-user";
         try {
             User createdUser = userService.createUser(user);
             model.addAttribute("createdUserDTO", createdUser.toDTO());
@@ -48,18 +50,47 @@ public class UserController {
         } catch (DuplicateUsernameException e) {
             model.addAttribute("errorMessage", "Username already exists.");
         }
-        return "create-user";
+//        return "create-user"; to make the new user in the some page and successMessage
+        return "redirect:/users?keyword="+user.getUsername();
     }
 
-    //method handler to handel lists students and return model and view
+    //Endpoint to update a user
+    @PostMapping("/update")
+    public String updateUser( Model model, @Valid User editedUser, BindingResult bindingResult,
+                              @RequestParam(defaultValue = "") String keyword,
+                              @RequestParam(defaultValue = "0") int page) {
+        if(bindingResult.hasErrors())return "edit-user"; // Return the edit form with errors
+        try {
+            // Retrieve the existing user by ID
+            User existingUser = userService.getUserById(editedUser.getId());
+            // Update the existing user's properties with the edited data
+            existingUser.setUsername(editedUser.getUsername());
+            existingUser.setEmail(editedUser.getEmail());
+            existingUser.setPassword(editedUser.getPassword());
+            // Save the changes to the existing user
+            userService.updateUser(existingUser.getId(), existingUser);
+            model.addAttribute("successMessage", "User updated successfully!");
+
+        } catch (DuplicateEmailException e) {
+            model.addAttribute("errorMessage", "Email already exists.");
+        } catch (DuplicateUsernameException e) {
+            model.addAttribute("errorMessage", "Username already exists.");
+        }
+
+        // Redirect back to the user list page
+        return "redirect:/users?page="+page+"&keyword="+keyword;
+    }
+
+    //method handler to handel list of users and return model and view
     @GetMapping
     public String listAllUsers(Model model,
                             @RequestParam(name = "page", defaultValue = "0") int page,
-                            @RequestParam(name = "size", defaultValue = "5") int size,
-                            @RequestParam(name = "keyword", defaultValue = "") String keyword  ) {
-        Page<User> usersPage = userService.getUsersByPage(keyword, page, size);
+                            @RequestParam(name = "size", defaultValue = "3") int size,
+                            @RequestParam(name = "keyword", defaultValue = "") String keyword,
+                            @RequestParam(name = "sortOrder", defaultValue = "ASC") String sortOrder) {
+        Page<User> usersPage = userService.getUsersByPage(keyword, page, size,sortOrder);
         model.addAttribute("usersPage", usersPage.getContent());
-        model.addAttribute("pages",new int[usersPage.getTotalPages()]);
+        model.addAttribute("pages",new int[usersPage.getTotalPages()]);//create table to hold the pages
         model.addAttribute("setPage",page);
         model.addAttribute("keyword",keyword);
         model.addAttribute("currentPage",page);
@@ -76,22 +107,13 @@ public class UserController {
     }
     //Get edit page
     @GetMapping("/edit")
-    public String getEditeUser(@PathVariable Long id,Model model){
-        model.addAttribute("user",userService.getUserById(id));
-        return "edit_student";
-    }
-    //Update
-    @PostMapping("/edit/{id}")
-    public String updateUser(@PathVariable Long id,@ModelAttribute("user") User user,Model model){
-        //get user from DB by id
-        User existingUser = userService.getUserById(id);
-        existingUser.setId(id);
-        existingUser.setUsername(user.getUsername());
-        existingUser.setEmail(user.getEmail());
-        existingUser.setPassword(user.getPassword());
-        //save updated user object
-        userService.createUser(existingUser);
-        return "redirect:/users";
+    public String getEditeUser( Model model, Long id,String keyword,int page){
+        User user = userService.getUserById(id);
+        if (user == null) throw new RuntimeException("User Doesn't Exist");
+        model.addAttribute("user",user);
+        model.addAttribute("page",page);
+        model.addAttribute("keyword",keyword);
+        return "edit-user";
     }
 
 
@@ -100,51 +122,51 @@ public class UserController {
 
 
 
-    // Endpoint to get a specific user by ID
-//    @GetMapping("/{userId}")
-//    @ResponseBody
-//    public ResponseEntity<UserDTO> getUserById(@PathVariable Long userId) {
-//        User user = userService.getUserById(userId);
-//        if (user != null) {
-//            UserDTO userDTO = user.toDTO();
-//            return ResponseEntity.ok(userDTO);
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
+    // Endpoint to get a specific user by ID Restful calls
+    @GetMapping("/{userId}")
+    @ResponseBody
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long userId) {
+        User user = userService.getUserById(userId);
+        if (user != null) {
+            UserDTO userDTO = user.toDTO();
+            return ResponseEntity.ok(userDTO);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     // Endpoint to update an existing user
-//    @PutMapping("/{userId}")
-//    @ResponseBody
-//    public ResponseEntity<UserDTO> updateUser(@PathVariable Long userId, @RequestBody User user) {
-//        User updatedUser = userService.updateUser(userId, user);
-//        if (updatedUser != null) {
-//            UserDTO updatedUserDTO = updatedUser.toDTO();
-//            return ResponseEntity.ok(updatedUserDTO);
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
+    @PutMapping("/{userId}")
+    @ResponseBody
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long userId, @RequestBody User user) {
+        User updatedUser = userService.updateUser(userId, user);
+        if (updatedUser != null) {
+            UserDTO updatedUserDTO = updatedUser.toDTO();
+            return ResponseEntity.ok(updatedUserDTO);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     // Endpoint to delete a user by ID
-//    @DeleteMapping("/{userId}")
-//    @ResponseBody
-//    public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
-//        boolean deleted = userService.deleteUserById(userId);
-//        if (deleted) {
-//            return ResponseEntity.noContent().build();
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
+    @DeleteMapping("/{userId}")
+    @ResponseBody
+    public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
+        boolean deleted = userService.deleteUserById(userId);
+        if (deleted) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     // Endpoint to get shopping lists for a specific user by ID
-//    @GetMapping("/{userId}/lists")
-//    @ResponseBody
-//    public ResponseEntity<List<ShoppingList>> getShoppingListsForUser(@PathVariable Long userId) {
-//        List<ShoppingList> shoppingLists = shoppingListService.getShoppingListsByUserId(userId);
-//        return ResponseEntity.ok(shoppingLists);
-//    }
+    @GetMapping("/{userId}/lists")
+    @ResponseBody
+    public ResponseEntity<List<ShoppingList>> getShoppingListsForUser(@PathVariable Long userId) {
+        List<ShoppingList> shoppingLists = shoppingListService.getShoppingListsByUserId(userId);
+        return ResponseEntity.ok(shoppingLists);
+    }
 
 
 }

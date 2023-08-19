@@ -15,5 +15,5 @@ public interface UserService {
     List<ShoppingList> getShoppingListsByUserId(Long userId);
     List<User> getAllUsers();
 
-    Page<User> getUsersByPage(String keyword,int page, int size);
+    Page<User> getUsersByPage(String keyword,int page, int size,String sortOrder);
 }
