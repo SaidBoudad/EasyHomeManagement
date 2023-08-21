@@ -2,12 +2,11 @@ package com.saidboudad.grocerylistservice.controller;
 
 import com.saidboudad.grocerylistservice.DTOs.ShoppingListRequest;
 import com.saidboudad.grocerylistservice.entity.ShoppingList;
+import com.saidboudad.grocerylistservice.exceptions.UserNotFoundException;
 import com.saidboudad.grocerylistservice.repository.ShoppingListRepository;
 import com.saidboudad.grocerylistservice.service.shppinglistService.ShoppingListService;
-import com.saidboudad.grocerylistservice.exceptions.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,22 +22,11 @@ public class ShoppingListController {
         this.shoppingListRepository = shoppingListRepository;
     }
 
-    // Endpoint to create specific shoppingList the request body has the listName and the userId
-
-    @GetMapping("/home")
-    public String home(Model model) {
-        return "home-page";
-    }
-
-    @GetMapping("/lists")
-    public String lists(Model model) {
-        return "shoppingLists";
-    }
-
+    // Endpoint to create specific shoppingList the request body has the listName and the clientId
     @PostMapping
     public ResponseEntity<ShoppingList> createShoppingList(@RequestBody ShoppingListRequest request) throws UserNotFoundException {
         try{
-            ShoppingList shoppingList = shoppingListService.createShoppingList(request.getName(), request.getUserId());
+            ShoppingList shoppingList = shoppingListService.createShoppingList(request.getName(), request.getClientId());
             return ResponseEntity.status(HttpStatus.CREATED).body(shoppingList);
         }catch (UserNotFoundException e) {
             return handleUserNotFoundException(e);
@@ -47,7 +35,6 @@ public class ShoppingListController {
     // Exception handler method to handle UserNotFoundException
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ShoppingList> handleUserNotFoundException(UserNotFoundException ex) {
-        // To add an appropriate error response here
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
@@ -68,7 +55,7 @@ public class ShoppingListController {
         ShoppingList updatedList = shoppingListService.updateShoppingList(listId, shoppingList);
         if (updatedList != null) {
             String lastChange = updatedList.getLastChange();
-            // Here I use the lastChange string to display the last change to the user
+            // Here I use the lastChange string to display the last change to the client
             System.out.println("Last Change: " + lastChange);
             return ResponseEntity.ok(updatedList);
         } else {

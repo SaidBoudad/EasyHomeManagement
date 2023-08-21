@@ -10,7 +10,7 @@ public class ItemRequestDTO {
     private Category category;
     private double quantity;
     private Long shoppingListId;
-    private Long userId;
+    private Long clientId;
 
 
 }

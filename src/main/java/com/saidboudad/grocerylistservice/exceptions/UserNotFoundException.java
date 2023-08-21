@@ -1,7 +1,7 @@
 package com.saidboudad.grocerylistservice.exceptions;
 
 public class UserNotFoundException extends RuntimeException {
-    public UserNotFoundException(Long userId) {
-        super("User with ID " + userId + " not found.");
+    public UserNotFoundException(Long clientId) {
+        super("User with ID " + clientId + " not found.");
     }
 }

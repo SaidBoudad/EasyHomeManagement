@@ -1,12 +1,12 @@
 package com.saidboudad.grocerylistservice.service.item;
 
 import com.saidboudad.grocerylistservice.DTOs.ItemRequestDTO;
+import com.saidboudad.grocerylistservice.entity.Client;
 import com.saidboudad.grocerylistservice.entity.Item;
 import com.saidboudad.grocerylistservice.entity.ShoppingList;
-import com.saidboudad.grocerylistservice.entity.User;
 import com.saidboudad.grocerylistservice.repository.ItemRepository;
 import com.saidboudad.grocerylistservice.repository.ShoppingListRepository;
-import com.saidboudad.grocerylistservice.repository.UserRepository;
+import com.saidboudad.grocerylistservice.repository.ClientRepository;
 import com.saidboudad.grocerylistservice.exceptions.UserNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,32 +20,32 @@ public class ItemServiceImpl implements ItemService {
 
     private final ItemRepository itemRepository;
     private final ShoppingListRepository shoppingListRepository;
-    private final UserRepository userRepository;
+    private final ClientRepository clientRepository;
 
-    public ItemServiceImpl(ItemRepository itemRepository, ShoppingListRepository shoppingListRepository, UserRepository userRepository) {
+    public ItemServiceImpl(ItemRepository itemRepository, ShoppingListRepository shoppingListRepository, ClientRepository clientRepository) {
         this.itemRepository = itemRepository;
         this.shoppingListRepository = shoppingListRepository;
-        this.userRepository = userRepository;
+        this.clientRepository = clientRepository;
     }
 
     @Override
     public Item addItem(ItemRequestDTO itemRequestDTO) {
         Optional<ShoppingList> shoppingListOptional = shoppingListRepository.findById(itemRequestDTO.getShoppingListId());
-        Optional<User> userOptional = userRepository.findById(itemRequestDTO.getUserId());
+        Optional<Client> userOptional = clientRepository.findById(itemRequestDTO.getClientId());
         if (shoppingListOptional.isPresent() && userOptional.isPresent()) {
-            User user = userOptional.get();
+            Client client = userOptional.get();
             ShoppingList shoppingList = shoppingListOptional.get();
             Item item = new Item();
             item.setName(itemRequestDTO.getName());
             item.setCategory(itemRequestDTO.getCategory());
             item.setQuantity(itemRequestDTO.getQuantity());
             item.setShoppingList(shoppingList);
-            item.setUser(user);
+            item.setClient(client);
             itemRepository.save(item);
             System.out.println(item.getId().toString()+"  after ");
             return item;
         } else {
-            throw new UserNotFoundException(itemRequestDTO.getUserId());
+            throw new UserNotFoundException(itemRequestDTO.getClientId());
         }
     }
 
@@ -55,8 +55,8 @@ public class ItemServiceImpl implements ItemService {
         return itemRepository.findById(itemId).orElse(null);
     }
 
-    public List<Item> getAllItemsForUser(Long userId) {
-        return itemRepository.findByUserId(userId);
+    public List<Item> getAllItemsForUser(Long clientId) {
+        return itemRepository.findByClientId(clientId);
     }
 
     public List<Item> getAllItemsForList(Long listId) {

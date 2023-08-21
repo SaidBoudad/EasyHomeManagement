@@ -1,11 +1,11 @@
 package com.saidboudad.grocerylistservice.service.shppinglistService;
 
-import com.saidboudad.grocerylistservice.DTOs.UserDTO;
+import com.saidboudad.grocerylistservice.DTOs.ClientDTO;
+import com.saidboudad.grocerylistservice.entity.Client;
 import com.saidboudad.grocerylistservice.entity.ShoppingList;
-import com.saidboudad.grocerylistservice.entity.User;
 import com.saidboudad.grocerylistservice.exceptions.UserNotFoundException;
 import com.saidboudad.grocerylistservice.repository.ShoppingListRepository;
-import com.saidboudad.grocerylistservice.repository.UserRepository;
+import com.saidboudad.grocerylistservice.repository.ClientRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,26 +15,26 @@ import java.util.Optional;
 
 @Service
 public class ShoppingListServiceImpl implements ShoppingListService {
-    private final UserRepository userRepository;
+    private final ClientRepository clientRepository;
     private final ShoppingListRepository shoppingListRepository;
 
-    public ShoppingListServiceImpl(UserRepository userRepository, ShoppingListRepository shoppingListRepository) {
-        this.userRepository = userRepository;
+    public ShoppingListServiceImpl(ClientRepository clientRepository, ShoppingListRepository shoppingListRepository) {
+        this.clientRepository = clientRepository;
         this.shoppingListRepository = shoppingListRepository;
     }
 
     @Override
     public ShoppingList createShoppingList(String name, Long userId) throws UserNotFoundException {
 
-        Optional<User> userOptional = userRepository.findById(userId);
+        Optional<Client> userOptional = clientRepository.findById(userId);
         if (userOptional.isPresent()) {
-            User user = userOptional.get();
+            Client client = userOptional.get();
             ShoppingList shoppingList = new ShoppingList();
             shoppingList.setName(name);
-            shoppingList.setUser(user);
+            shoppingList.setClient(client);
             shoppingListRepository.save(shoppingList);
             System.out.println(shoppingList.getId().toString()+"  after ");
-            shoppingList.setUserDTO(user.toDTO());
+            shoppingList.setClientDTO(client.toDTO());
             return shoppingList;
         } else {
             throw new UserNotFoundException(userId);
@@ -46,10 +46,10 @@ public class ShoppingListServiceImpl implements ShoppingListService {
         Optional<ShoppingList> shoppingListOptional = shoppingListRepository.findById(listId);
         if (shoppingListOptional.isPresent()) {
             ShoppingList shoppingList = shoppingListOptional.get();
-            Optional<User> userOptional = Optional.ofNullable(shoppingList.getUser());
+            Optional<Client> userOptional = Optional.ofNullable(shoppingList.getClient());
             userOptional.ifPresent(user -> {
-                UserDTO userDTO = user.toDTO();
-                shoppingList.setUserDTO(userDTO);
+                ClientDTO clientDTO = user.toDTO();
+                shoppingList.setClientDTO(clientDTO);
             });
             return shoppingList;
         } else {
@@ -81,12 +81,12 @@ public class ShoppingListServiceImpl implements ShoppingListService {
 
             if (!changes.isEmpty()) {
                 // Fetch the associated User entity and convert it to UserDTO
-                User user = existingList.getUser();
-                UserDTO userDTO = user.toDTO();
+                Client client = existingList.getClient();
+                ClientDTO clientDTO = client.toDTO();
 
                 // Create a message containing the list of changes and the modification time
                 String modificationMessage = String.join(", ", changes);
-                existingList.setUserDTO(userDTO);
+                existingList.setClientDTO(clientDTO);
                 existingList.setLastChange(modificationMessage);
 
                 // Save the changes to the database
@@ -107,14 +107,14 @@ public class ShoppingListServiceImpl implements ShoppingListService {
 
     // Method to get all shopping lists for a specific user by ID
     @Override
-    public List<ShoppingList> getShoppingListsByUserId(Long userId) {
-        List<ShoppingList> shoppingLists = shoppingListRepository.findByUserId(userId);
+    public List<ShoppingList> getShoppingListsByClientId(Long userId) {
+        List<ShoppingList> shoppingLists = shoppingListRepository.findByClientId(userId);
         // Loop through the list and convert User to UserDTO
         shoppingLists.forEach(shoppingList -> {
-            User user = shoppingList.getUser();
-            if (user != null) {
-                UserDTO userDTO = user.toDTO();
-                shoppingList.setUserDTO(userDTO);
+            Client client = shoppingList.getClient();
+            if (client != null) {
+                ClientDTO clientDTO = client.toDTO();
+                shoppingList.setClientDTO(clientDTO);
             }
         });
         //using stream

@@ -2,13 +2,12 @@ package com.saidboudad.grocerylistservice.controller;
 
 import com.saidboudad.grocerylistservice.DTOs.ItemRequestDTO;
 import com.saidboudad.grocerylistservice.entity.Item;
+import com.saidboudad.grocerylistservice.service.client.ClientService;
 import com.saidboudad.grocerylistservice.service.item.ItemService;
 import com.saidboudad.grocerylistservice.service.shppinglistService.ShoppingListService;
-import com.saidboudad.grocerylistservice.service.user.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,19 +18,15 @@ public class ItemController {
 
     private final ItemService itemService;
     private ShoppingListService shoppingListService;
-    private UserService userService;
+    private ClientService clientService;
 
-    public ItemController(ItemService itemService, ShoppingListService shoppingListService, UserService userService) {
+    public ItemController(ItemService itemService, ShoppingListService shoppingListService, ClientService clientService) {
 
         this.itemService = itemService;
         this.shoppingListService = shoppingListService;
-        this.userService = userService;
+        this.clientService = clientService;
     }
 
-    @GetMapping("/home")
-    public String home(Model model) {
-        return "home-page";
-    }
 
     @GetMapping("/{itemId}")
     public ResponseEntity<Item> getItem(@PathVariable Long itemId) {
@@ -43,10 +38,10 @@ public class ItemController {
         }
     }
 
-    // Get all items for a given user ID
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Item>> getAllItemsForUser(@PathVariable Long userId) {
-        List<Item> items = itemService.getAllItemsForUser(userId);
+    // Get all items for a given client ID
+    @GetMapping("/user/{clientId}")
+    public ResponseEntity<List<Item>> getAllItemsForClient(@PathVariable Long clientId) {
+        List<Item> items = itemService.getAllItemsForUser(clientId);
         return ResponseEntity.ok(items);
     }
 

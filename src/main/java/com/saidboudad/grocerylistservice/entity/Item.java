@@ -41,7 +41,7 @@ public class Item {
     private ShoppingList shoppingList;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false) // foreign key to the User entity
+    @JoinColumn(name = "client_id", nullable = false) // foreign key to the User entity
     @JsonBackReference // Do not serialize this property
-    private User user;
+    private Client client;
 }

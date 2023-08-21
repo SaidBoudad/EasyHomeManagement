@@ -1,7 +1,7 @@
 package com.saidboudad.grocerylistservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.saidboudad.grocerylistservice.DTOs.UserDTO;
+import com.saidboudad.grocerylistservice.DTOs.ClientDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -16,17 +16,18 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "clients")
+public class Client {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username", nullable = false, unique = true)
+    @Column(name = "clientName", nullable = false, unique = true)
     @NotEmpty @NotBlank
     @Size(min=2 ,max=40)
-    private String username;
+    private String clientName;
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
@@ -34,14 +35,15 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Item> items;
 
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<ShoppingList> shoppingLists;
+
 
     //code before removing : cascade = CascadeType.ALL, orphanRemoval = true , to solve the error
     //"HibernateException: A collection with cascade="all-delete-orphan"
@@ -54,10 +56,10 @@ public class User {
 //    @JsonManagedReference
 //    private List<ShoppingList> shoppingLists;
 
-    public UserDTO toDTO() {
-        UserDTO dto = new UserDTO();
+    public ClientDTO toDTO() {
+        ClientDTO dto = new ClientDTO();
         dto.setId(this.id);
-        dto.setUsername(this.username);
+        dto.setClientName(this.clientName);
         dto.setEmail(this.email);
 
         return dto;

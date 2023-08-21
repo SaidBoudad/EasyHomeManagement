@@ -20,21 +20,21 @@
     </div>
     <div class="row">
         <div class="col-lg-3">
-            <a href="http://localhost:8088/users/create" class="btn btn-secondary">Add User</a>
+            <a th:href="@{/users/client/create}" class="btn btn-secondary">Add User</a>
         </div>
         <br>
     </div>
-    <form method="get" th:action="@{users}">
+    <form th:if="${#authorization.expression('hasRole(''ADMIN'')')}" method="get" th:action="@{/users/admin}">
         <label>User Name</label>
         <input type="text" name="keyword" th:value="${keyword}">
         <button type="submit" class="btn btn-primary">
             <i class="bi bi-search"></i>
         </button>
-
     </form>
     <table class="table table-dark table-border">
         <thead class="table-dark">
         <tr>
+            <th>User ID</th>
             <th>User Name</th>
             <th>User Email</th>
             <th>Actions</th>
@@ -42,18 +42,19 @@
         </thead>
 
         <tbody>
-        <tr th:each="user:${usersPage}">
-            <td th:text="${user.id}"></td>
-            <td th:text="${user.username}"></td>
-            <td th:text="${user.email}"></td>
+        <tr th:each="client:${usersPage}">
+            <td th:text="${client.id}"></td>
+            <td th:text="${client.clientName}"></td>
+            <td th:text="${client.email}"></td>
             <td>
-                <a class="btn btn-primary"    th:href="@{/users/edit(id=${user.id},
+                <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}"  class="btn btn-primary"    th:href="@{/users/admin/edit(id=${client.id},
                  keyword=${keyword}, page=${currentPage})}">
                     <i class="bi bi-pen"></i>Edit
                 </a>
-
+            </td>
+            <td th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
                 <a onclick="javascript:return confirm('are you sure ?')" class="btn btn-danger"
-                   th:href="@{users/delete(id=${user.id}, keyword=${keyword}, page=${currentPage})}">
+                   th:href="@{/users/admin/delete(id=${client.id}, keyword=${keyword}, page=${currentPage})}">
                     <i class="bi bi-trash"></i>
                 </a>
             </td>
@@ -64,8 +65,8 @@
 <!--            like for loop of java, ofr each page in pages take item-->
             <a th:class="${(item.index==currentPage)?'btn btn-primary ms-1':'btn btn-outline-primary ms-1'}"
                th:text="${1+item.index}"
-               th:href="@{users(page=${item.index},keyword=${keyword})}"
-            ></a> <!-- to make every element in a button i use 'btn btn-primary-->
+               th:href="@{/users/admin(page=${item.index},keyword=${keyword})}"
+            ></a> <!-- to make every element in a button, I use 'btn btn-primary-->
         </li>
     </ul>
 

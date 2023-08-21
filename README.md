@@ -15,11 +15,11 @@ Design the Database: Plan the structure of our database to store information abo
 
 Choose a Technology Stack: Select the appropriate technologies for our web application. We will use popular web development frameworks Java17 and spring boot 3.1.2 , and thymeleaf for the frontend(thymeleaf is a server-side Java template engine that allows you to create dynamic web pages by blending your HTML templates with Java code. It acts as a "motor" or engine for rendering templates, where you can embed dynamic data and expressions directly into your HTML templates using Thymeleaf's syntax. Thymeleaf templates are processed on the server side to generate the final HTML content that is sent to the client's browser. This allows you to create dynamic and data-driven web pages without needing to write extensive JavaScript code on the client side.).
 
-Develop the Backend: Implement the backend logic to handle inventory management, budget tracking, and buying planning. This involves creating APIs to interact with the database and handle user requests.
+Develop the Backend: Implement the backend logic to handle inventory management, budget tracking, and buying planning. This involves creating APIs to interact with the database and handle client requests.
 
-Design the Frontend: Create a user-friendly and responsive frontend that allows  to manage the inventory, budget, and buying planning to make the app visually appealing.
+Design the Frontend: Create a client-friendly and responsive frontend that allows  to manage the inventory, budget, and buying planning to make the app visually appealing.
 
-User Authentication: Implement user authentication and authorization to ensure that only authorized users can access and modify the data.
+User Authentication: Implement client authentication and authorization to ensure that only authorized users can access and modify the data.
 
 Low Stock Reminder: Set up a system that regularly checks the stock levels and sends  reminders when items are near to finish.
 
@@ -39,7 +39,7 @@ Creating a microservices architecture for the home management application is a g
 
 API Gateway: Implement an API Gateway as the entry point for all client requests. The API Gateway will route incoming requests to the appropriate microservices and handle authentication and authorization.
 
-Authentication and Authorization Service: Create a separate microservice responsible for managing user authentication and authorization. This service will handle user registration, login, and ensure that only authorized users can access certain functionalities.
+Authentication and Authorization Service: Create a separate microservice responsible for managing client authentication and authorization. This service will handle client registration, login, and ensure that only authorized users can access certain functionalities.
 
 Inventory Service: Develop a microservice responsible for managing the inventory of your grocery and household items. It will handle adding new items, updating stock levels, and providing information about items nearing completion.
 
@@ -51,7 +51,7 @@ Category Service: Create a separate microservice to manage the categories of ite
 
 Notification Service: Implement a microservice responsible for sending notifications to users, such as low stock alerts or budget updates.
 
-Frontend Application: Build a mobile app or web app that serves as the user interface to interact with the microservices. This frontend application will communicate with the API Gateway to access the different functionalities.
+Frontend Application: Build a mobile app or web app that serves as the client interface to interact with the microservices. This frontend application will communicate with the API Gateway to access the different functionalities.
 
 Database Management: Each microservice should have its own database to ensure data isolation and improve scalability. You can use a mix of relational and NoSQL databases depending on the specific requirements of each service.
 
@@ -63,7 +63,7 @@ Remember that while microservices offer numerous benefits, they also introduce a
 
 Additionally, microservices require careful planning and consideration of the interdependencies between services. Proper testing, error handling, and fallback mechanisms are critical to maintaining a robust and reliable system.
 
-By taking a structured approach to designing our microservices architecture, we can create a powerful and flexible home management application that can scale with our needs and offer an excellent user experience.
+By taking a structured approach to designing our microservices architecture, we can create a powerful and flexible home management application that can scale with our needs and offer an excellent client experience.
 
 
 
@@ -113,7 +113,7 @@ Step 3: User Authentication Microservice
 
 Create the User Authentication microservice.
 
-Implement user registration, login, and authentication logic.
+Implement client registration, login, and authentication logic.
 
 Set up access control and authorization mechanisms.
 
@@ -161,7 +161,7 @@ Step 9: Frontend Application
 
 Build the frontend application (web or mobile app) that will interact with the microservices.
 
-Implement user interfaces for managing inventory, budget, and buying planning.
+Implement client interfaces for managing inventory, budget, and buying planning.
 
 Integrate with the API Gateway to communicate with the microservices.
 
@@ -185,7 +185,7 @@ Step 12: Monitoring and Maintenance
 
 Implement monitoring and logging solutions to keep track of the application's health and performance.
 
-Monitor usage and user feedback to make improvements over time.
+Monitor usage and client feedback to make improvements over time.
 
 Regularly maintain and update the application to keep it secure and up-to-date.
 

@@ -7,5 +7,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class ShoppingListRequest {
     private String name;
-    private Long userId;
+    private Long clientId;
 }

@@ -2,7 +2,7 @@ package com.saidboudad.grocerylistservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.saidboudad.grocerylistservice.DTOs.UserDTO;
+import com.saidboudad.grocerylistservice.DTOs.ClientDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,9 +30,9 @@ public class ShoppingList {
     private int numberOfItem;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false) // foreign key to the User entity
+    @JoinColumn(name = "client_id", nullable = false) // foreign key to the User entity
     @JsonBackReference
-    private User user;
+    private Client client;
 
     @OneToMany(mappedBy = "shoppingList",cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference // Serialize this property (ShoppingList) as a forward reference
@@ -51,10 +51,10 @@ public class ShoppingList {
     private String lastChange;
 
     @Transient
-    private UserDTO userDTO;
+    private ClientDTO clientDTO;
 
-    public void setUserDTO(UserDTO userDTO) {
-        this.userDTO = userDTO;
+    public void setClientDTO(ClientDTO clientDTO) {
+        this.clientDTO = clientDTO;
     }
 
     @PrePersist

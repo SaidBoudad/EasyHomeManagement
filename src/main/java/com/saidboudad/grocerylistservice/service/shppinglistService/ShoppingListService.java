@@ -12,7 +12,7 @@ public interface ShoppingListService {
     ShoppingList updateShoppingList(Long listId, ShoppingList shoppingList);
     boolean deleteShoppingListById(Long listId);
 
-    List<ShoppingList> getShoppingListsByUserId(Long userId);
+    List<ShoppingList> getShoppingListsByClientId(Long userId);
 
 
 

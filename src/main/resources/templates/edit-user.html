@@ -12,15 +12,15 @@
         <div class="col-mg-6 col-md-6 container justify-content-center card">
             <h1 class="text-center">Update User</h1>
             <div class="card-body">
-                <form th:action="@{/users/update(page=${page}, keyword=${keyword})}" th:object="${user}" method="POST">
+                <form th:action="@{/users/admin/update(page=${page}, keyword=${keyword})}" th:object="${client}" method="POST">
 
                     <div class="form-group">
                         <label>User ID : </label>
-                        <lable th:text="${user.id}"></lable>
+                        <lable th:text="${client.id}"></lable>
                         <input
                             type="hidden"
                             name="id"
-                            th:field = "${user.id}"
+                            th:field = "${client.id}"
                             class="form-control"
                             placeholder="Enter User ID">
                     </div>
@@ -29,11 +29,11 @@
                         <label>Username</label>
                         <input
                                 type="text"
-                                name="username"
-                                th:value="${user.username}"
+                                name="clientName"
+                                th:value="${client.clientName}"
                                 class="form-control"
                                 placeholder="Enter Username">
-                        <span class="text-danger" th:errors="${user.username}"></span>
+                        <span class="text-danger" th:errors="${client.clientName}"></span>
                     </div>
 
                     <div class="form-group">
@@ -41,10 +41,10 @@
                         <input
                                 type="email"
                                 name="email"
-                                th:value="${user.email}"
+                                th:value="${client.email}"
                                 class="form-control"
                                 placeholder="Enter Email">
-                        <span class="text-danger" th:errors="${user.email}"></span>
+                        <span class="text-danger" th:errors="${client.email}"></span>
                     </div>
 
                     <div class="form-group">
@@ -52,10 +52,10 @@
                         <input
                                 type="password"
                                 name="password"
-                                th:value="${user.password}"
+                                th:value="${client.password}"
                                 class="form-control"
                                 placeholder="Enter Password">
-                        <span class="text-danger" th:errors="${user.password}"></span>
+                        <span class="text-danger" th:errors="${client.password}"></span>
                     </div>
 
                     <div class="box-footer">

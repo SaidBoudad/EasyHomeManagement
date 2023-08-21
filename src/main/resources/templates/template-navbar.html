@@ -20,11 +20,11 @@
         </button>
         <div class="collapse navbar-collapse" id="mynavbar">
             <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{users/create}">Create New User</a>
+                <li class="nav-item" >
+                    <a class="nav-link" th:href="@{/users/user/create}">Create New User</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/users}">All Users</a>
+                <li th:if="${#authorization.expression('hasRole(''ADMIN'')')}" class="nav-item">
+                    <a class="nav-link" th:href="@{/users/admin}">All Users</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/home}">Home</a>
@@ -32,24 +32,26 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Services</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">User Lists</a></li>
-                        <li><a class="dropdown-item" href="#">User Items</a></li>
-                        <li><a class="dropdown-item" href="#">User History</a></li>
+                        <li><a class="dropdown-item" href="#">My Lists</a></li>
+                        <li><a class="dropdown-item" href="#">My Items</a></li>
                     </ul>
                 </li>
             </ul>
-            <ul class="navbar-nav me-auto">
+
+            <ul class="navbar-nav " float-end>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">[Username]</a>
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                    <span th:text="${#authentication.name}"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Logout</a></li>
+                        <li>
+                            <form method="post" th:action="@{/logout}">
+                                <button class="dropdown-item" type="submit">logout</button>
+                            </form>
+                        </li>
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex">
-                <input class="form-control me-2" type="text" placeholder="Search">
-                <button class="btn btn-primary" type="button">Search</button>
-            </form>
         </div>
     </div>
 </nav>

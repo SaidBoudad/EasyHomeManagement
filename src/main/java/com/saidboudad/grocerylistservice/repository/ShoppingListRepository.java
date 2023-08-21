@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface ShoppingListRepository extends JpaRepository<ShoppingList, Long> {
-    @Query("SELECT sl FROM ShoppingList sl WHERE sl.user.id = :userId")
-    List<ShoppingList> findByUserId(Long userId);
+    @Query("SELECT sl FROM ShoppingList sl WHERE sl.client.id = :clientId")
+    List<ShoppingList> findByClientId(Long clientId);
 
 }
