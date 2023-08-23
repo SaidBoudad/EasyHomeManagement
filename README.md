@@ -253,4 +253,13 @@ If there are other family members or users who will be involved in using the app
 
 Keep them informed about the project's progress and involve them in the decision-making process when relevant.
 
-By thoroughly planning and gathering requirements in the initial stages, you will have a clear direction for your home management application's development. It will help you avoid unnecessary delays and ensure that the final product meets your expectations and those of your users.
+By thoroughly planning and gathering requirements in the initial stages, you will have a clear direction for your home management 
+application's development. It will help you avoid unnecessary delays and ensure that the final product meets your expectations and 
+those of your users.
+For the security , I used Spring Security org.springframework.boot spring-boot-starter-security with the module of thymeleaf 
+that handel the relationship with this frmaework org.thymeleaf.extras thymeleaf-extras-springsecurity6 3.1.0.M1 is used for 
+integrating Thymeleaf (a popular template engine) with Spring Security (a security framework for Java applications) in the 
+context of Spring Security version 6. The thymeleaf-extras-springsecurity6 module provides various Thymeleaf dialects and
+utilities that make it easier to work with Spring Security concepts within your Thymeleaf templates. These dialects allow you
+to create templates that are aware of Spring Security's authentication and authorization features, making it simpler to control
+content visibility based on user roles, permissions, and authentication status.

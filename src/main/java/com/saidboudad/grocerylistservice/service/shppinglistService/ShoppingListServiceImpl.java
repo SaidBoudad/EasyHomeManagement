@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class ShoppingListServiceImpl implements ShoppingListService {
     private final ClientRepository clientRepository;
     private final ShoppingListRepository shoppingListRepository;

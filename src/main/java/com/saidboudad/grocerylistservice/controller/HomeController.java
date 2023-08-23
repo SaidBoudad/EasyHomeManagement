@@ -9,12 +9,12 @@ public class HomeController {
 
     //Get home page
     @GetMapping("/home")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public String getHomePage(Model model) {
         return "home-page";
     }
     @GetMapping("/")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public String home(Model model) {
         return "redirect:/home";
     }

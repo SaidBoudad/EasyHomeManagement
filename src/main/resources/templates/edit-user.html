@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template-navbar">
 <head>
     <meta charset="UTF-8">
     <title>Grocery List Service</title>
@@ -7,6 +9,7 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
+<div layout:fragment="content1">
 <div class="container">
     <div class="row">
         <div class="col-mg-6 col-md-6 container justify-content-center card">
@@ -67,6 +70,6 @@
 
     </div>
 </div>
-
+</div>
 </body>
 </html>
