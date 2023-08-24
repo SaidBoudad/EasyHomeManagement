@@ -50,7 +50,8 @@
 <!--            th:if="${#authorization.expression('hasRole(''ADMIN'')')}"-->
 
             <td>
-                <a  th:if="${#authorization.expression('hasRole(''ADMIN'')')}"   class="btn btn-primary"    th:href="@{/users/admin/edit(id=${client.id},
+                <a  th:if="${#authorization.expression('hasRole(''ADMIN'')')}"   class="btn btn-primary"
+                    th:href="@{/users/admin/edit(id=${client.id},
                  keyword=${keyword}, page=${currentPage})}">
                     <i class="bi bi-pen"></i>Edit
                 </a>

@@ -15,38 +15,11 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import javax.sql.DataSource;
 
+import static org.springframework.security.config.Customizer.withDefaults;
 
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeHttpRequests((requests) -> requests
-//                        .requestMatchers("/", "/home").permitAll()
-//                        .anyRequest().authenticated()
-//                )
-//                .formLogin((form) -> form
-//                        .loginPage("/login")
-//                        .permitAll()
-//                )
-//                .logout((logout) -> logout.permitAll());
-//
-//        return http.build();
-//    }
-//
-//
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user =
-//                User.withDefaultPasswordEncoder()
-//                        .username("user")
-//                        .password("password")
-//                        .roles("USER")
-//                        .build();
-//
-//        return new InMemoryUserDetailsManager(user);
-//    }
-//}
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true)  //also @EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity  //also @EnableGlobalMethodSecurity(prePostEnabled = true)
 @AllArgsConstructor
 public class SecurityConfig {
 
@@ -56,11 +29,21 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-//        httpSecurity.csrf().disable(); //this is for disablinging the csrf when we are in stateless security using JWT towken.
-        httpSecurity.formLogin().loginPage("/login").defaultSuccessUrl("/home").permitAll();
-        httpSecurity.exceptionHandling().accessDeniedPage("/notAuthorized");
-        httpSecurity.rememberMe();
-        httpSecurity.authorizeHttpRequests().anyRequest().authenticated();
+//      httpSecurity.csrf().disable(); //this is for disablinging the csrf when we are in stateless security using JWT towken
+
+        httpSecurity.authorizeHttpRequests((authz) -> authz.requestMatchers("/")
+                                    .permitAll()
+                                    .anyRequest()
+                                    .authenticated())
+                    .formLogin(formLogin -> formLogin.loginPage("/login")
+                                    .defaultSuccessUrl("/home")
+                                    .permitAll())
+                   .exceptionHandling((exceptionHandling) -> exceptionHandling
+                                    .accessDeniedPage("/notAuthorized"))
+                   .rememberMe(withDefaults());
+        httpSecurity.userDetailsService(myUserDetailsService);
+        return httpSecurity.build();
+
 
         //    First way to do the Authorization : URL-based security (HTTP Security) focuses on securing HTTP endpoints
 
@@ -70,10 +53,7 @@ public class SecurityConfig {
         //    Second way is to use @EnableMethodSecurity(prePostEnabled = true) in SecurityConfig class
         //and the @PreAuthorize("hasRole('USER')") or Admin under endpoints : :GlobaleMethodSecurity at the method level
 
-        //    This part for Spring Security to use UserDetailsService
 
-        httpSecurity.userDetailsService(myUserDetailsService);
-        return httpSecurity.build();
     }
 
 

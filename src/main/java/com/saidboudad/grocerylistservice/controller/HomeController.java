@@ -10,13 +10,18 @@ public class HomeController {
     //Get home page
     @GetMapping("/home")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public String getHomePage(Model model) {
+    public String getHomePageAuthenticated(Model model) {
         return "home-page";
     }
     @GetMapping("/")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public String home(Model model) {
-        return "redirect:/home";
+//    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public String homeForAll(Model model) {
+        return "home-all";
+    }
+    @GetMapping("/signin")
+//    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public String getLoginPage(Model model) {
+        return "login";
     }
 
 }
