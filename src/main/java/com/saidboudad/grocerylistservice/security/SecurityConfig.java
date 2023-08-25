@@ -31,7 +31,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 //      httpSecurity.csrf().disable(); //this is for disablinging the csrf when we are in stateless security using JWT towken
 
-        httpSecurity.authorizeHttpRequests((authz) -> authz.requestMatchers("/")
+        httpSecurity.authorizeHttpRequests((authz) -> authz.requestMatchers("/","/logout")
                                     .permitAll()
                                     .anyRequest()
                                     .authenticated())

@@ -60,6 +60,16 @@
                                 placeholder="Enter Password">
                         <span class="text-danger" th:errors="${client.password}"></span>
                     </div>
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <input
+                                type="password"
+                                name="confirmPass"
+                                class="form-control"
+                                placeholder="Confirm Password">
+                        <span class="text-danger" th:errors="${client.confirmPass}"></span>
+                    </div>
+
 
                     <div class="box-footer">
                         <button type="submit" class="btn btn-primary">Submit</button>

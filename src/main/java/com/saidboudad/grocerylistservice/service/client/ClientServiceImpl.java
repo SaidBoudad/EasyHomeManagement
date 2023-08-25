@@ -5,10 +5,14 @@ import com.saidboudad.grocerylistservice.entity.ShoppingList;
 import com.saidboudad.grocerylistservice.exceptions.DuplicateEmailException;
 import com.saidboudad.grocerylistservice.exceptions.DuplicateUsernameException;
 import com.saidboudad.grocerylistservice.repository.ClientRepository;
+import com.saidboudad.grocerylistservice.security.Service.AccountService;
+import com.saidboudad.grocerylistservice.security.entities.AppUser;
+import com.saidboudad.grocerylistservice.security.repo.AppUserRepo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,13 +24,21 @@ import java.util.List;
 public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepository;
+    private final AccountService accountService;
+    private final PasswordEncoder passwordEncoder;
+    private final AppUserRepo appUserRepo;
 
-    public ClientServiceImpl(ClientRepository clientRepository) {
+
+    public ClientServiceImpl(ClientRepository clientRepository, AccountService accountService, PasswordEncoder passwordEncoder,
+                             AppUserRepo appUserRepo) {
         this.clientRepository = clientRepository;
+        this.accountService = accountService;
+        this.passwordEncoder = passwordEncoder;
+        this.appUserRepo = appUserRepo;
     }
 
     @Override
-    public Client createClient(Client client) {
+    public Client createClient(Client client,String confirmPass) {
         // Check for duplicate email
         if (clientRepository.findByEmail(client.getEmail()) != null) {
             throw new DuplicateEmailException(client.getEmail());
@@ -37,7 +49,23 @@ public class ClientServiceImpl implements ClientService {
             throw new DuplicateUsernameException(client.getClientName());
         }
 
-        return clientRepository.save(client);
+        // Check if password and confirmPass match
+        if (!client.getPassword().equals(confirmPass)) {
+            throw new RuntimeException("Passwords do not match");
+        }
+
+        // Encode the password
+        String encodedPassword = passwordEncoder.encode(client.getPassword());
+        client.setPassword(encodedPassword);
+
+        Client savedClient = clientRepository.save(client);
+
+        // Create corresponding AppUser entry
+        accountService.addNewUser(savedClient.getClientName()
+                , savedClient.getPassword()
+                , savedClient.getEmail());
+
+        return savedClient;
     }
 
     @Override
@@ -47,25 +75,38 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client updateClient(Long clientId, Client client) {
+    public Client updateClient(Long clientId, Client updatedClient,String confirmPass) {
         Client existingClient = clientRepository.findById(clientId).orElse(null);
         if (existingClient != null) {
             // Check if the new email is already used by another user
-            Client clientWithNewEmail = clientRepository.findByEmail(client.getEmail());
+            Client clientWithNewEmail = clientRepository.findByEmail(updatedClient.getEmail());
             if (clientWithNewEmail != null && !clientWithNewEmail.getId().equals(clientId)) {
                 throw new DuplicateEmailException("Email is already in use by another user");
             }
 
             // Check if the new clientName is already used by another client
-            Client clientWithNewUsername = clientRepository.findByClientName(client.getClientName());
+            Client clientWithNewUsername = clientRepository.findByClientName(updatedClient.getClientName());
             if (clientWithNewUsername != null && !clientWithNewUsername.getId().equals(clientId)) {
                 throw new DuplicateUsernameException("Username is already in use by another user");
             }
 
-            existingClient.setClientName(client.getClientName());
-            existingClient.setEmail(client.getEmail());
-            existingClient.setPassword(client.getPassword());
-            // Don't forget to handle password encoding.
+            existingClient.setClientName(updatedClient.getClientName());
+            existingClient.setEmail(updatedClient.getEmail());
+
+            // Only update the password if a new password is provided
+            if (!updatedClient.getPassword().isEmpty()) {
+                String encodedPassword = passwordEncoder.encode(updatedClient.getPassword());
+                existingClient.setPassword(encodedPassword);
+            }
+
+            // Update the corresponding AppUser entry
+            AppUser appUser = accountService.loadUserByUsername(existingClient.getClientName());
+            if (appUser != null) {
+                appUser.setUsername(existingClient.getClientName());
+                appUser.setEmail(existingClient.getEmail());
+                appUser.setPassword(existingClient.getPassword());
+                appUserRepo.save(appUser);
+            }
 
             return clientRepository.save(existingClient);
         }

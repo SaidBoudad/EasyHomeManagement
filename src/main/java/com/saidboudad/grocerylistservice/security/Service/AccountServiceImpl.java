@@ -5,10 +5,10 @@ import com.saidboudad.grocerylistservice.security.entities.AppUser;
 import com.saidboudad.grocerylistservice.security.repo.AppRoleRepo;
 import com.saidboudad.grocerylistservice.security.repo.AppUserRepo;
 import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.UUID;
 
 @Service
@@ -18,19 +18,25 @@ public class AccountServiceImpl implements AccountService {
 
     private AppUserRepo appUserRepo;
     private AppRoleRepo appRoleRepo;
-    private PasswordEncoder passwordEncoder;
 
     @Override
-    public AppUser addNewUser(String username, String password, String email, String confirmPassword) {
+    public AppUser addNewUser(String username, String encodedPassword, String email) {
         AppUser appUser = appUserRepo.findByUsername(username);
         if(appUser!=null) throw new RuntimeException("username already exist");
-        if(!password.equals(confirmPassword)) throw new RuntimeException("password not much");
         appUser = AppUser.builder()
                 .userId(UUID.randomUUID().toString())
                 .username(username)
-                .password(passwordEncoder.encode(password))
+                .password(encodedPassword)
                 .email(email)
                 .build();
+
+        // Add the "USER" role to the user
+        AppRole userRole = appRoleRepo.findById("USER").orElse(null);
+        if (userRole == null) {
+            throw new RuntimeException("Role not found: USER");
+        }
+        appUser.setRoles(Collections.singletonList(userRole));
+
         AppUser savedAppUser = appUserRepo.save(appUser);
         return savedAppUser;
     }

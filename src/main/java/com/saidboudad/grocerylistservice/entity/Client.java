@@ -35,6 +35,9 @@ public class Client {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Transient
+    private String confirmPass;
+
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Item> items;

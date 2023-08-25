@@ -14,14 +14,15 @@ public class HomeController {
         return "home-page";
     }
     @GetMapping("/")
-//    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public String homeForAll(Model model) {
         return "home-all";
     }
     @GetMapping("/signin")
-//    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public String getLoginPage(Model model) {
         return "login";
     }
-
+    @GetMapping("/logout")
+    public String getHomeForAllFromLogin(Model model) {
+        return "home-all";
+    }
 }

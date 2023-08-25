@@ -42,10 +42,12 @@ public class ClientController {
     // Endpoint to create a new user
     @PostMapping("/user/save")
     @PreAuthorize("hasRole('USER')")
-    public String createUser(Model model, @Valid Client client, BindingResult bindingResult) {
+    public String createUser(Model model, @Valid Client client,
+                             @RequestParam("confirmPass") String confirmPass,
+                             BindingResult bindingResult) {
         if(bindingResult.hasErrors())return "create-user";
         try {
-            Client createdClient = clientService.createClient(client);
+            Client createdClient = clientService.createClient(client,confirmPass);
             model.addAttribute("createdClientDTO", createdClient.toDTO());
             model.addAttribute("successMessage", "User created successfully!");
         } catch (DuplicateEmailException e) {
@@ -60,15 +62,18 @@ public class ClientController {
     //Endpoint to update a user
     @PostMapping("/admin/update")
     @PreAuthorize("hasRole('ADMIN')")
-    public String updateClient(Model model, @Valid Client editedClient, BindingResult bindingResult,
-                             @RequestParam(defaultValue = "") String keyword,
-                             @RequestParam(defaultValue = "0") int page) {
-        if(bindingResult.hasErrors())return "edit-user"; // Return the edit form with errors
+    public String updateClient(Model model, @Valid Client editedClient,
+                               @RequestParam("confirmPass") String confirmPass,
+                               BindingResult bindingResult,
+                               @RequestParam(defaultValue = "") String keyword,
+                               @RequestParam(defaultValue = "0") int page) {
+        if(bindingResult.hasErrors())
+            return "edit-user"; // Return the edit form with errors
         try {
             // Retrieve the existing user by ID
             Client existingClient = clientService.getClientById(editedClient.getId());
             // Update the existing client's with the edited client
-            clientService.updateClient(existingClient.getId(), editedClient);
+            clientService.updateClient(existingClient.getId(), editedClient, confirmPass);
             // Success message
             model.addAttribute("successMessage", "User updated successfully!");
 
@@ -148,8 +153,10 @@ public class ClientController {
     // Endpoint to update an existing user
     @PutMapping("/{clientId}")
     @ResponseBody
-    public ResponseEntity<ClientDTO> updateClient(@PathVariable Long clientId, @RequestBody Client client) {
-        Client updatedClient = clientService.updateClient(clientId, client);
+    public ResponseEntity<ClientDTO> updateClient(@PathVariable Long clientId,
+                                                  @RequestBody Client client,
+                                                  @RequestParam String confirmPass) {
+        Client updatedClient = clientService.updateClient(clientId, client, confirmPass);
         if (updatedClient != null) {
             ClientDTO updatedClientDTO = updatedClient.toDTO();
             return ResponseEntity.ok(updatedClientDTO);

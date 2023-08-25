@@ -1,6 +1,5 @@
 package com.saidboudad.grocerylistservice;
 
-import com.saidboudad.grocerylistservice.security.Service.AccountService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -64,20 +63,21 @@ public class GroceryListServiceApplication {
     //Step3 : secured using UserDetailsService
     //For adding Users with roles and authorities to the AppUser and AppRole Tables for security purpose
     //@Bean
-    CommandLineRunner commandLineRunnerUserDetailsService(AccountService accountService){
-        return args->{
-            accountService.addNewRole("USER");
-            accountService.addNewRole("ADMIN");
-            accountService.addNewUser("said","1111","said@gmail.com","1111");
-            accountService.addNewUser("lina","2222","lina@gmail.com","2222");
-            accountService.addNewUser("samira","2222","samira@gmail.com","2222");
-
-            accountService.addRoleToUser("said","ADMIN");
-            accountService.addRoleToUser("said","USER");
-            accountService.addRoleToUser("lina","USER");
-            accountService.addRoleToUser("samira","ADMIN");
-        };
-    }
+//    CommandLineRunner commandLineRunnerUserDetailsService(AccountService accountService){
+//        return args->{
+//
+//            accountService.addNewRole("USER");
+//            accountService.addNewRole("ADMIN");
+//            accountService.addNewUser("said","1111","said@gmail.com","1111");
+//            accountService.addNewUser("lina","2222","lina@gmail.com","2222");
+//            accountService.addNewUser("samira","2222","samira@gmail.com","2222");
+//
+//            accountService.addRoleToUser("said","ADMIN");
+//            accountService.addRoleToUser("said","USER");
+//            accountService.addRoleToUser("lina","USER");
+//            accountService.addRoleToUser("samira","ADMIN");
+//        };
+//    }
 
 
 

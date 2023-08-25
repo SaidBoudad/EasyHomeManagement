@@ -58,12 +58,22 @@
                         <div class="form-group">
                             <label>Password</label>
                             <input
-                                    type="password"
-                                    name="password"
-                                    th:value="${client.password}"
-                                    class="form-control"
-                                    placeholder="Enter Password">
+                                 type="password"
+                                 name="password"
+                                 th:value="${client.password}"
+                                 class="form-control"
+                                 placeholder="Enter Password">
                             <span class="text-danger" th:errors="${client.password}"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Confirm Password</label>
+                            <input
+                                 type="password"
+                                 name="confirmPass"
+                                 class="form-control"
+                                 placeholder="Confirm Password">
+                            <span class="text-danger" th:errors="*{confirmPass}"></span>
                         </div>
 
                         <div class="box-footer">

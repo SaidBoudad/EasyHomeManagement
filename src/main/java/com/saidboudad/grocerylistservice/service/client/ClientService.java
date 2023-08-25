@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface ClientService {
 
-    Client createClient(Client client);
+    Client createClient(Client client,String confirmPass);
     Client getClientById(Long clientId);
-    Client updateClient(Long clientId, Client client);
+    Client updateClient(Long clientId, Client client,String confirmPass);
     boolean deleteClientById(Long clientId);
     List<ShoppingList> getShoppingListsByClientId(Long clientId);
     List<Client> getAllClients();
