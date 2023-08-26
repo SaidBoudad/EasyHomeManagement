@@ -36,7 +36,7 @@ public class ClientController {
     @PreAuthorize("hasRole('USER')")
     public String showCreateUserForm(Model model) {
         model.addAttribute("client", new Client());
-        return "create-user"; // Return the view name for the form page
+        return "create-user";
     }
 
     // Endpoint to create a new user
@@ -136,7 +136,7 @@ public class ClientController {
 
 
 
-
+    //    This part is for the RestFull calls
     // Endpoint to get a specific user by ID Restful calls
     @GetMapping("/{userId}")
     @ResponseBody

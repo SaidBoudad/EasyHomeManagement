@@ -12,40 +12,117 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-    <div layout:fragment="content1">
+<div layout:fragment="content1">
+    <div class="row">
+        <div class="col-md-3">
 
-<section class="hero-section">
-    <div class="container">
-        <h1>Welcome to Your App</h1>
-        <p>Your app's tagline or description goes here.</p>
-        <h1>Welcome to our Grocery List App</h1>
-        <h1>This is the home page of the Grocery List App.</h1>
-        <p>Organize your home, kitchen, and budget with ease!</p>
-        <p>Here you can navigate to various sections of the app.</p>
-        <a href="/signup" class="btn btn-primary">Get Started</a>
-    </div>
-</section>
-
-<section class="features-section">
-    <div class="container">
-        <div class="feature">
-            <h2>Feature 1</h2>
-            <p>Description of feature 1.</p>
+            <ol class="list-group list-group-numbered">
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <a th:href="@{/list/user/category/GROCERY}" class="list-item-link" data-category="GROCERY">Grocery Lists</a>
+                        Content for list item
+                    </div>
+                    <span class="badge bg-primary rounded-pill">14</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">To Do Lists</div>
+                        Content for list item
+                    </div>
+                    <span class="badge bg-primary rounded-pill">14</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">Movies To Watch</div>
+                        Content for list item
+                    </div>
+                    <span class="badge bg-primary rounded-pill">14</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">Shopping Lists</div>
+                        Content for list item
+                    </div>
+                    <span class="badge bg-primary rounded-pill">14</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">Home Work List</div>
+                        Content for list item
+                    </div>
+                    <span class="badge bg-primary rounded-pill">14</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">Travel</div>
+                        Content for list item
+                    </div>
+                    <span class="badge bg-primary rounded-pill">14</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">Gift Ideas</div>
+                        Content for list item
+                    </div>
+                    <span class="badge bg-primary rounded-pill">14</span>
+                </li>
+            </ol>
         </div>
-        <div class="feature">
-            <h2>Feature 2</h2>
-            <p>Description of feature 2.</p>
-        </div>
-        <!-- Add more feature sections as needed -->
-    </div>
-</section>
+        <div class="col-md-9">
+            <div th:replace="fragments/list-content :: list-content"></div>
 
-<footer>
-    <div class="container">
-        <p>&copy; 2023 Your App. All rights reserved.</p>
+                        <!-- list-content.html -->
+            <!--            <ul class="list-group">-->
+            <!--                <li class="list-group-item" th:each="list : ${lists}">-->
+            <!--                    &lt;!&ndash;        <a th:href="@{/list/details/{listId}(listId=${list.id})}" th:text="${list.name}" class="list-link"></a>&ndash;&gt;-->
+            <!--                </li>-->
+            <!--            </ul>-->
+
+
+
+        </div>
+
+        <footer>
+            <div class="container">
+                <p>&copy; 2023 Your App. All rights reserved.</p>
+            </div>
+
+
+
+
+        </footer>
     </div>
-</footer>
-    </div>
+</div>
+
+<!-- Include jQuery library -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".list-item-link").click(function (event) {
+            event.preventDefault(); // Prevent the default link behavior
+
+            var category = $(this).data("category");
+            loadListContent(category);
+        });
+
+        function loadListContent(category) {
+            // Use AJAX to fetch the list content based on the selected category
+            $.ajax({
+                url: "/list/user/category/" + category,
+                method: "GET",
+                success: function (response) {
+                    $("#grocery-content").html(response); // Update the content area
+                },
+                error: function () {
+                    console.log("Error fetching lists.");
+                }
+            });
+        }
+    });
+</script>
+
+
+
 </body>
 </html>
 

@@ -8,4 +8,5 @@ import lombok.Data;
 public class ShoppingListRequest {
     private String name;
     private Long clientId;
+    private ListCategory category;
 }

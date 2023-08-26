@@ -1,6 +1,6 @@
 package com.saidboudad.grocerylistservice.DTOs;
 
-public enum Category {
+public enum ItemCategory {
 
         CUISINE,
         HEALTH,

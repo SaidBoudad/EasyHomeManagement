@@ -14,6 +14,6 @@ public interface ClientService {
     boolean deleteClientById(Long clientId);
     List<ShoppingList> getShoppingListsByClientId(Long clientId);
     List<Client> getAllClients();
-
     Page<Client> getClientsByPage(String keyword, int page, int size, String sortOrder);
+    Client findByUsername(String username);
 }

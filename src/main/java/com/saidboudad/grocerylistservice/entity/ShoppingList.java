@@ -3,6 +3,7 @@ package com.saidboudad.grocerylistservice.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.saidboudad.grocerylistservice.DTOs.ClientDTO;
+import com.saidboudad.grocerylistservice.DTOs.ListCategory;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,10 @@ public class ShoppingList {
 
     @Column(name = "name", nullable = false)
     private String name;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "category", nullable = false)
+    private ListCategory category;
 
     @Column(name="numberOfItems",nullable = false)
     private int numberOfItem;

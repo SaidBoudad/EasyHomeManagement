@@ -1,11 +1,17 @@
 package com.saidboudad.grocerylistservice.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+
+
 @Controller
 public class HomeController {
+    private static final Logger logInfo = LoggerFactory.getLogger(HomeController.class);
 
     //Get home page
     @GetMapping("/home")

@@ -37,7 +37,7 @@ public class ItemServiceImpl implements ItemService {
             ShoppingList shoppingList = shoppingListOptional.get();
             Item item = new Item();
             item.setName(itemRequestDTO.getName());
-            item.setCategory(itemRequestDTO.getCategory());
+            item.setItemCategory(itemRequestDTO.getItemCategory());
             item.setQuantity(itemRequestDTO.getQuantity());
             item.setShoppingList(shoppingList);
             item.setClient(client);
@@ -69,7 +69,7 @@ public class ItemServiceImpl implements ItemService {
         if (existingItem != null) {
             // Update the properties of the existingItem with the properties of updatedItem
             existingItem.setName(itemRequestDTO.getName());
-            existingItem.setCategory(itemRequestDTO.getCategory());
+            existingItem.setItemCategory(itemRequestDTO.getItemCategory());
             existingItem.setQuantity(itemRequestDTO.getQuantity());
             return itemRepository.save(existingItem);
         }

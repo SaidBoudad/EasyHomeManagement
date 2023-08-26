@@ -1,6 +1,7 @@
 package com.saidboudad.grocerylistservice.service.shppinglistService;
 
 import com.saidboudad.grocerylistservice.DTOs.ClientDTO;
+import com.saidboudad.grocerylistservice.DTOs.ListCategory;
 import com.saidboudad.grocerylistservice.entity.Client;
 import com.saidboudad.grocerylistservice.entity.ShoppingList;
 import com.saidboudad.grocerylistservice.exceptions.UserNotFoundException;
@@ -25,21 +26,26 @@ public class ShoppingListServiceImpl implements ShoppingListService {
     }
 
     @Override
-    public ShoppingList createShoppingList(String name, Long userId) throws UserNotFoundException {
+    public ShoppingList createShoppingList(String name, Long clientId, ListCategory category) throws UserNotFoundException {
 
-        Optional<Client> userOptional = clientRepository.findById(userId);
-        if (userOptional.isPresent()) {
-            Client client = userOptional.get();
+        Optional<Client> clientOptional = clientRepository.findById(clientId);
+        if (clientOptional.isPresent()) {
+            Client client = clientOptional.get();
             ShoppingList shoppingList = new ShoppingList();
             shoppingList.setName(name);
             shoppingList.setClient(client);
+            shoppingList.setCategory(category);
             shoppingListRepository.save(shoppingList);
-            System.out.println(shoppingList.getId().toString()+"  after ");
             shoppingList.setClientDTO(client.toDTO());
             return shoppingList;
         } else {
-            throw new UserNotFoundException(userId);
+            throw new UserNotFoundException(clientId);
         }
+    }
+
+    @Override
+    public List<ShoppingList> getListsByCategory(ListCategory category) {
+        return shoppingListRepository.findByCategory(category);
     }
 
     @Override

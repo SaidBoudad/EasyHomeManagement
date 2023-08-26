@@ -7,7 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class ItemRequestDTO {
     private String name;
-    private Category category;
+    private ItemCategory itemCategory;
     private double quantity;
     private Long shoppingListId;
     private Long clientId;

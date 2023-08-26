@@ -1,7 +1,7 @@
 package com.saidboudad.grocerylistservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.saidboudad.grocerylistservice.DTOs.Category;
+import com.saidboudad.grocerylistservice.DTOs.ItemCategory;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +25,7 @@ public class Item {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "category", nullable = false)
-    private Category category;
+    private ItemCategory itemCategory;
 
     @Column(name = "quantity", nullable = false)
     private double quantity;

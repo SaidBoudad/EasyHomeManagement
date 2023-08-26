@@ -1,37 +1,116 @@
 package com.saidboudad.grocerylistservice.controller;
 
+import com.saidboudad.grocerylistservice.DTOs.ListCategory;
 import com.saidboudad.grocerylistservice.DTOs.ShoppingListRequest;
+import com.saidboudad.grocerylistservice.entity.Client;
 import com.saidboudad.grocerylistservice.entity.ShoppingList;
 import com.saidboudad.grocerylistservice.exceptions.UserNotFoundException;
 import com.saidboudad.grocerylistservice.repository.ShoppingListRepository;
+import com.saidboudad.grocerylistservice.service.client.ClientService;
 import com.saidboudad.grocerylistservice.service.shppinglistService.ShoppingListService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/shoppingList")
+import java.util.List;
+
+@Controller
+@RequestMapping("/list")
 public class ShoppingListController {
 
     private final ShoppingListService shoppingListService;
-    private final ShoppingListRepository shoppingListRepository;
+    private ClientService clientService;
+    private final Logger logger = LoggerFactory.getLogger(ShoppingListController.class);
+    
 
 
-    public ShoppingListController(ShoppingListService shoppingListService, ShoppingListRepository shoppingListRepository) {
+    public ShoppingListController(ShoppingListService shoppingListService, ShoppingListRepository shoppingListRepository, ClientService clientService) {
         this.shoppingListService = shoppingListService;
-        this.shoppingListRepository = shoppingListRepository;
+        this.clientService = clientService;
     }
 
+    // Display the list creation form
+    @GetMapping("/user/create")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public String showCreateListForm(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        Client client = clientService.findByUsername(userDetails.getUsername());
+        model.addAttribute("list", new ShoppingList());
+        model.addAttribute("client", client);
+        model.addAttribute("clientId", client.getId()); // Add clientId to the model
+        return "create-list";
+    }
+
+
+    @PostMapping("/user/save")
+    @PreAuthorize("hasRole('USER')")
+    public String createShoppingList(@ModelAttribute("list") ShoppingList shoppingList,
+                                     @RequestParam("clientId") Long clientId,
+                                     Model model) {
+        try {
+            shoppingListService.createShoppingList(shoppingList.getName(), clientId, shoppingList.getCategory());
+            // Success message
+            model.addAttribute("successMessage", "Shopping list created successfully!");
+        } catch (UserNotFoundException e) {
+            // Error message
+            model.addAttribute("errorMessage", "User not found.");
+        }
+
+        // Redirect to the form
+        return "redirect:/list/user/create";
+    }
+
+    @GetMapping("/user/category/{category}")
+    public String getListsByCategory(@PathVariable("category") ListCategory category, Model model) {
+        List<ShoppingList> lists = shoppingListService.getListsByCategory(category);
+        model.addAttribute("lists", lists);
+        return "list-content :: list-content"; // Thymeleaf fragment name
+    }
+
+
+
+
+    // Endpoint to get a specific shopping list by ID
+//    @GetMapping("/{listId}")
+//    @PreAuthorize("hasRole('USER')")
+//    public String getShoppingListById(@PathVariable Long listId) {
+//        ShoppingList shoppingList = shoppingListService.getShoppingListById(listId);
+//        if (shoppingList != null) {
+//            return null;
+//        } else {
+//            return null;
+//        }
+//    }
+//
+
+
+
+
+
+
+
+
+    //    This part is for the RestFull calls
     // Endpoint to create specific shoppingList the request body has the listName and the clientId
     @PostMapping
     public ResponseEntity<ShoppingList> createShoppingList(@RequestBody ShoppingListRequest request) throws UserNotFoundException {
-        try{
-            ShoppingList shoppingList = shoppingListService.createShoppingList(request.getName(), request.getClientId());
+        try {
+            ShoppingList shoppingList = shoppingListService.createShoppingList(request.getName(), request.getClientId(),request.getCategory());
             return ResponseEntity.status(HttpStatus.CREATED).body(shoppingList);
-        }catch (UserNotFoundException e) {
+        } catch (UserNotFoundException e) {
             return handleUserNotFoundException(e);
         }
     }
+
     // Exception handler method to handle UserNotFoundException
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ShoppingList> handleUserNotFoundException(UserNotFoundException ex) {
