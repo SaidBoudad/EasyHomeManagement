@@ -23,7 +23,6 @@ import java.util.List;
 public class ClientController {
 
     private final ClientService clientService;
-
     private final ShoppingListService shoppingListService;
 
     public ClientController(ClientService clientService, ShoppingListService shoppingListService) {

@@ -21,14 +21,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/list")
 public class ShoppingListController {
 
-    private final ShoppingListService shoppingListService;
+    private  final ShoppingListService shoppingListService;
     private ClientService clientService;
-    private final Logger logger = LoggerFactory.getLogger(ShoppingListController.class);
+    private final Logger log = LoggerFactory.getLogger(ShoppingListController.class);
     
 
 
@@ -71,9 +72,32 @@ public class ShoppingListController {
 
     @GetMapping("/user/category/{category}")
     public String getListsByCategory(@PathVariable("category") ListCategory category, Model model) {
-        List<ShoppingList> lists = shoppingListService.getListsByCategory(category);
-        model.addAttribute("lists", lists);
-        return "list-content :: list-content"; // Thymeleaf fragment name
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        Client client = clientService.findByUsername(userDetails.getUsername());
+        List<ShoppingList> shoppingLists = shoppingListService.getListsByCategoryAndUsername(category, client.getClientName());
+
+        log.info("get lists by category controller accessed");
+
+        if (shoppingLists == null) {
+            model.addAttribute("customMessage", "No lists found for the specified category for you.");
+        } else {
+            model.addAttribute("shoppingLists", shoppingLists);
+
+        }
+        log.info("get lists by category controller accessed");
+        return "home-page"; // Return the main template name
+    }
+    @GetMapping("/user/category-counts")
+    @ResponseBody
+    public Map<String, Long> getCategoryCountsForClient() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        Client client = clientService.findByUsername(userDetails.getUsername());
+
+        Map<String, Long> categoryCounts = shoppingListService.getCategoryCountsForUser(client.getClientName());
+
+        return categoryCounts;
     }
 
 

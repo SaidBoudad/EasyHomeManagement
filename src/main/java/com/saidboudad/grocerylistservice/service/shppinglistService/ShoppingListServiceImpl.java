@@ -5,14 +5,12 @@ import com.saidboudad.grocerylistservice.DTOs.ListCategory;
 import com.saidboudad.grocerylistservice.entity.Client;
 import com.saidboudad.grocerylistservice.entity.ShoppingList;
 import com.saidboudad.grocerylistservice.exceptions.UserNotFoundException;
-import com.saidboudad.grocerylistservice.repository.ShoppingListRepository;
 import com.saidboudad.grocerylistservice.repository.ClientRepository;
+import com.saidboudad.grocerylistservice.repository.ShoppingListRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -44,9 +42,29 @@ public class ShoppingListServiceImpl implements ShoppingListService {
     }
 
     @Override
-    public List<ShoppingList> getListsByCategory(ListCategory category) {
-        return shoppingListRepository.findByCategory(category);
+    public List<ShoppingList> getListsByCategoryAndUsername(ListCategory category,String clientName) {
+        List<ShoppingList> shoppingLists = shoppingListRepository.findByCategoryAndClient_ClientName(category, clientName);
+        if (shoppingLists.isEmpty()) {
+            // No lists found for the specified category and client name
+            return null;
+        }
+        return shoppingLists;
     }
+
+    @Override
+    public Map<String, Long> getCategoryCountsForUser(String clientName) {
+        List<Object[]> categoryCounts = shoppingListRepository.countShoppingListsByCategoryForUser(clientName);
+        Map<String, Long> countsMap = new HashMap<>();
+
+        for (Object[] result : categoryCounts) {
+            ListCategory category = (ListCategory) result[0];
+            Long count = (Long) result[1];
+            countsMap.put(category.toString(), count);// Convert enum to String the key of hashmap should be immutable
+        }
+
+        return countsMap;
+    }
+
 
     @Override
     public ShoppingList getShoppingListById(Long listId) {

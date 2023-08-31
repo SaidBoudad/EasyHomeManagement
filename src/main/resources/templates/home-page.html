@@ -16,69 +16,123 @@
     <div class="row">
         <div class="col-md-3">
 
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="showAllCategories">
+                <label class="form-check-label" for="showAllCategories">Show All Categories</label>
+            </div>
+
             <ol class="list-group list-group-numbered">
+
+                <!--                <li class="list-group-item d-flex justify-content-between align-items-start"-->
+                <!--                    th:each="category : ${categories}">-->
+                <!--                    <div class="ms-2 me-auto">-->
+                <!--                        <a th:href="@{/list/user/category/{categoryName}(categoryName=${category})}"-->
+                <!--                           class="list-item-link" data-category="${category}">-->
+                <!--                            <span th:text="${category}"></span>-->
+                <!--                            (<span th:text="${categoryCounts[category]}"></span> lists)-->
+                <!--                        </a>-->
+                <!--                    </div>-->
+                <!--                    <span class="badge bg-primary rounded-pill" th:text="${categoryCounts[category]}"></span>-->
+                <!--                </li>-->
+
                 <li class="list-group-item d-flex justify-content-between align-items-start">
                     <div class="ms-2 me-auto">
-                        <a th:href="@{/list/user/category/GROCERY}" class="list-item-link" data-category="GROCERY">Grocery Lists</a>
-                        Content for list item
+                        <a th:href="@{/list/user/category/GROCERY}" class="list-item-link" data-category="GROCERY">Grocery
+                            Lists</a>
                     </div>
-                    <span class="badge bg-primary rounded-pill">14</span>
+                    <span class="badge bg-primary rounded-pill">
+                    <span th:if="${categoryCounts['GROCERY'] > 0}"
+                          th:text="${categoryCounts['GROCERY']} + ' Lists'"></span>
+                    <span th:unless="${categoryCounts['GROCERY'] > 0}">0 Lists</span>
+                    </span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-start">
                     <div class="ms-2 me-auto">
-                        <div class="fw-bold">To Do Lists</div>
-                        Content for list item
+                        <a th:href="@{/list/user/category/TODO}" class="list-item-link" data-category="TODO">To Do
+                            Lists</a>
                     </div>
-                    <span class="badge bg-primary rounded-pill">14</span>
+                    <span class="badge bg-primary rounded-pill">
+                    <span th:if="${categoryCounts['TODO'] > 0}" th:text="${categoryCounts['TODO']} + ' Lists'"></span>
+                    <span th:unless="${categoryCounts['TODO'] > 0}">0 Lists</span>
+                    </span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-start">
                     <div class="ms-2 me-auto">
-                        <div class="fw-bold">Movies To Watch</div>
-                        Content for list item
+                        <a th:href="@{/list/user/category/MOVIES}" class="list-item-link" data-category="MOVIES">Movies
+                            To Watch</a>
                     </div>
-                    <span class="badge bg-primary rounded-pill">14</span>
+                    <span class="badge bg-primary rounded-pill">
+                        <span th:if="${categoryCounts['MOVIES'] > 0}"
+                              th:text="${categoryCounts['MOVIES']} + ' Lists'"></span>
+                        <span th:unless="${categoryCounts['MOVIES'] > 0}">0 Lists</span>
+                    </span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-start">
                     <div class="ms-2 me-auto">
-                        <div class="fw-bold">Shopping Lists</div>
-                        Content for list item
+                        <a th:href="@{/list/user/category/SHOPPING}" class="list-item-link" data-category="SHOPPING">Shopping
+                            Lists</a>
                     </div>
-                    <span class="badge bg-primary rounded-pill">14</span>
+                    <span class="badge bg-primary rounded-pill">
+                        <span th:if="${categoryCounts['SHOPPING'] > 0}"
+                              th:text="${categoryCounts['SHOPPING']} + ' Lists'"></span>
+                        <span th:unless="${categoryCounts['SHOPPING'] > 0}">0 Lists</span>
+                    </span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-start">
                     <div class="ms-2 me-auto">
-                        <div class="fw-bold">Home Work List</div>
-                        Content for list item
+                        <a th:href="@{/list/user/category/HOMEWORK}" class="list-item-link" data-category="HOMEWORK">Home
+                            Work List</a>
                     </div>
-                    <span class="badge bg-primary rounded-pill">14</span>
+                    <span class="badge bg-primary rounded-pill">
+                        <span th:if="${categoryCounts['HOMEWORK'] > 0}"
+                              th:text="${categoryCounts['HOMEWORK']} + ' Lists'"></span>
+                        <span th:unless="${categoryCounts['HOMEWORK'] > 0}">0 Lists</span>
+                    </span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-start">
                     <div class="ms-2 me-auto">
-                        <div class="fw-bold">Travel</div>
-                        Content for list item
+                        <a th:href="@{/list/user/category/TRAVEL}" class="list-item-link"
+                           data-category="TRAVEL">Travel</a>
                     </div>
-                    <span class="badge bg-primary rounded-pill">14</span>
+                    <span class="badge bg-primary rounded-pill">
+                        <span th:if="${categoryCounts['TRAVEL'] > 0}"
+                              th:text="${categoryCounts['TRAVEL']} + ' Lists'"></span>
+                        <span th:unless="${categoryCounts['TRAVEL'] > 0}">0 Lists</span>
+                    </span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-start">
                     <div class="ms-2 me-auto">
-                        <div class="fw-bold">Gift Ideas</div>
-                        Content for list item
+                        <a th:href="@{/list/user/category/GIFT}" class="list-item-link" data-category="GIFT">Gift
+                            Ideas</a>
                     </div>
-                    <span class="badge bg-primary rounded-pill">14</span>
+                    <span class="badge bg-primary rounded-pill">
+                        <span th:if="${categoryCounts['GIFT'] > 0}"
+                              th:text="${categoryCounts['GIFT']} + ' Lists'"></span>
+                        <span th:unless="${categoryCounts['GIFT'] > 0}">0 Lists</span>
+                    </span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <a th:href="@{/list/user/category/OTHER}" class="list-item-link" data-category="OTHER">Other</a>
+                    </div>
+                    <span class="badge bg-primary rounded-pill">
+                        <span th:if="${categoryCounts['OTHER'] > 0}"
+                              th:text="${categoryCounts['OTHER']} + ' Lists'"></span>
+                        <span th:unless="${categoryCounts['OTHER'] > 0}">0 Lists</span>
+                    </span>
                 </li>
             </ol>
         </div>
         <div class="col-md-9">
-            <div th:replace="fragments/list-content :: list-content"></div>
 
-                        <!-- list-content.html -->
-            <!--            <ul class="list-group">-->
-            <!--                <li class="list-group-item" th:each="list : ${lists}">-->
-            <!--                    &lt;!&ndash;        <a th:href="@{/list/details/{listId}(listId=${list.id})}" th:text="${list.name}" class="list-link"></a>&ndash;&gt;-->
-            <!--                </li>-->
-            <!--            </ul>-->
-
-
+            <!-- list-content.html -->
+            <ul class="list-group">
+                <li class="list-group-item" th:each="list : ${shoppingLists}">
+                    <a th:href="@{/list/details/{listId}(listId=${list.id})}" th:text="${list.name}"
+                       class="list-link"></a>
+                </li>
+            </ul>
+            <p th:text="${customMessage}" class="custom-message"></p>
 
         </div>
 
@@ -86,8 +140,6 @@
             <div class="container">
                 <p>&copy; 2023 Your App. All rights reserved.</p>
             </div>
-
-
 
 
         </footer>
@@ -105,23 +157,76 @@
             loadListContent(category);
         });
 
-        function loadListContent(category) {
-            // Use AJAX to fetch the list content based on the selected category
-            $.ajax({
-                url: "/list/user/category/" + category,
-                method: "GET",
-                success: function (response) {
-                    $("#grocery-content").html(response); // Update the content area
-                },
-                error: function () {
-                    console.log("Error fetching lists.");
+
+
+<!--        function loadListContent(category) {-->
+<!--            // Use AJAX to fetch the list content based on the selected category-->
+<!--            $.ajax({-->
+<!--                url: "/list/user/category/" + category,-->
+<!--                method: "GET",-->
+<!--                success: function (response) {-->
+<!--                    $("#grocery-content").html(response); // Update the content area-->
+<!--                },-->
+<!--                error: function () {-->
+<!--                    console.log("Error fetching lists.");-->
+<!--                }-->
+<!--            });-->
+<!--        }-->
+
+        function loadListNames(category) {
+           // Use AJAX to fetch the list names for the specified category
+           $.ajax({
+              url: "/list/user/category/" + category,
+              method: "GET",
+              success: function (response) {
+              // Update the list names on the right side of the page
+              $("#list-names").html(response);
+        },
+        error: function () {
+            console.log("Error fetching list names.");
+        }
+    }
+    });
+
+
+
+
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Initially, show only categories with lists
+        showCategoriesWithLists();
+
+        // Handle checkbox change event
+        $("#showAllCategories").change(function () {
+            if (this.checked) {
+                showAllCategories();
+            } else {
+                showCategoriesWithLists();
+            }
+        });
+
+        function showAllCategories() {
+            $(".list-group-item").show();
+        }
+
+        function showCategoriesWithLists(categoryCounts) {
+            $(".list-group-item").each(function () {
+                if ($(this).find(".badge").text() === 0) {
+                    $(this).hide();
+                } else {
+                    $(this).show();
                 }
             });
         }
     });
+
+
+
+
 </script>
-
-
 
 </body>
 </html>

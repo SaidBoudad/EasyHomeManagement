@@ -5,6 +5,7 @@ import com.saidboudad.grocerylistservice.entity.ShoppingList;
 import com.saidboudad.grocerylistservice.exceptions.UserNotFoundException;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ShoppingListService {
 
@@ -14,7 +15,9 @@ public interface ShoppingListService {
     boolean deleteShoppingListById(Long listId);
 
     List<ShoppingList> getShoppingListsByClientId(Long userId);
-    List<ShoppingList> getListsByCategory(ListCategory category);
+    List<ShoppingList> getListsByCategoryAndUsername(ListCategory category,String username);
+
+    Map<String, Long> getCategoryCountsForUser(String clientName);
 
 
 
