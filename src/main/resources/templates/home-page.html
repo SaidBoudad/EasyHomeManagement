@@ -125,9 +125,12 @@
 
             <!-- list-content.html -->
             <ul class="list-group">
-                <li class="list-group-item" th:each="list : ${shoppingLists}">
+                <li class="list-group-item" th:if="${not #lists.isEmpty(shoppingLists)}" th:each="list : ${shoppingLists}">
                     <a th:href="@{/list/details/{listId}(listId=${list.id})}" th:text="${list.name}"
                        class="list-link"></a>
+                </li>
+                <li class="list-group-item" th:if="${#lists.isEmpty(shoppingLists)}">
+                    No lists found in this category.
                 </li>
             </ul>
             <p th:text="${customMessage}" class="custom-message"></p>

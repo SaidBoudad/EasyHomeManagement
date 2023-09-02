@@ -58,15 +58,17 @@ public class ShoppingListController {
                                      @RequestParam("clientId") Long clientId,
                                      Model model) {
         try {
-            shoppingListService.createShoppingList(shoppingList.getName(), clientId, shoppingList.getCategory());
+            ShoppingList shoppingListCreated = shoppingListService.createShoppingList(shoppingList.getName(), clientId, shoppingList.getCategory());
             // Success message
+            log.info(shoppingListCreated.getName());
+
+            model.addAttribute("shoppingListCreated", shoppingListCreated);
             model.addAttribute("successMessage", "Shopping list created successfully!");
         } catch (UserNotFoundException e) {
             // Error message
             model.addAttribute("errorMessage", "User not found.");
         }
-        // Redirect to the form
-        return "redirect:/list/user/create";
+        return "create-list";
     }
 
     @GetMapping("/user/category/{category}")
@@ -78,7 +80,8 @@ public class ShoppingListController {
         Map<String, Long> categoryCounts = shoppingListService.getCategoryCountsForUser(client.getClientName());
 
         if (shoppingLists == null) {
-            model.addAttribute("customMessage", "No lists found for the specified category for you.");
+            model.addAttribute("customMessage", "");
+            model.addAttribute("categoryCounts", categoryCounts);
         } else {
             model.addAttribute("shoppingLists", shoppingLists);
             model.addAttribute("categoryCounts", categoryCounts);

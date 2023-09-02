@@ -60,12 +60,10 @@
                                 </select>
                             </div>
 
-
-                            <input type="hidden" name="clientId" th:value="${client.id}" />
-
                             <div class="box-footer">
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
+
                         </form>
                     </div>
                 </div>
@@ -74,11 +72,13 @@
     </div>
 
 
-    <!-- Display the created client DTO -->
-    <div th:if="${list}" class="client-details text-center"> <!-- Add "text-center" class -->
-        <h2>Created ShoppingList</h2>
-        <p><strong>Username:</strong> <span th:text="${list.name}"></span></p>
-        <p><strong>Email:</strong> <span th:text="${list.category}"></span></p>
+
+    <!-- Display the created list -->
+    <div th:if="${shoppingListCreated}" class="client-details text-center"> <!-- Add "text-center" class -->
+        <h2>Created List Details</h2>
+        <p><strong>List Name :</strong> <span th:text="${shoppingListCreated.name}"></span></p>
+        <p><strong>Category :</strong> <span th:text="${shoppingListCreated.category}"></span></p>
+
     </div>
 </div>
 </body>
