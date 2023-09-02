@@ -65,7 +65,6 @@ public class ShoppingListServiceImpl implements ShoppingListService {
         return countsMap;
     }
 
-
     @Override
     public ShoppingList getShoppingListById(Long listId) {
         Optional<ShoppingList> shoppingListOptional = shoppingListRepository.findById(listId);

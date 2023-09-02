@@ -65,7 +65,6 @@ public class ShoppingListController {
             // Error message
             model.addAttribute("errorMessage", "User not found.");
         }
-
         // Redirect to the form
         return "redirect:/list/user/create";
     }
@@ -76,18 +75,17 @@ public class ShoppingListController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         Client client = clientService.findByUsername(userDetails.getUsername());
         List<ShoppingList> shoppingLists = shoppingListService.getListsByCategoryAndUsername(category, client.getClientName());
-
-        log.info("get lists by category controller accessed");
+        Map<String, Long> categoryCounts = shoppingListService.getCategoryCountsForUser(client.getClientName());
 
         if (shoppingLists == null) {
             model.addAttribute("customMessage", "No lists found for the specified category for you.");
         } else {
             model.addAttribute("shoppingLists", shoppingLists);
-
+            model.addAttribute("categoryCounts", categoryCounts);
         }
-        log.info("get lists by category controller accessed");
         return "home-page"; // Return the main template name
     }
+
     @GetMapping("/user/category-counts")
     @ResponseBody
     public Map<String, Long> getCategoryCountsForClient() {

@@ -33,7 +33,6 @@ public class HomeController {
         Client client = clientService.findByUsername(userDetails.getUsername());
         // Get the categories and their counts for the user
         Map<String, Long> categoryCounts = shoppingListService.getCategoryCountsForUser(client.getClientName());
-
         model.addAttribute("client", client);
         // Bind the category counts to the category list
         model.addAttribute("categories", categoryCounts.keySet());
