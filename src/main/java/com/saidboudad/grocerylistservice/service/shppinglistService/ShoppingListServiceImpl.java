@@ -62,11 +62,6 @@ public class ShoppingListServiceImpl implements ShoppingListService {
                 Long count = (Long) result[1];
                 countsMap.put(category.toString(), count);}
 
-
-//        for (Object[] result : categoryCounts) {
-//            ListCategory category = (ListCategory) result[0];
-//            Long count = (Long) result[1];
-//            countsMap.put(category.toString(), count);// Convert enum to String the key of hashmap should be immutable
         }
 
         return countsMap;

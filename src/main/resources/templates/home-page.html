@@ -16,24 +16,23 @@
     <div class="row">
         <div class="col-md-3">
 
-<!--            <div class="form-check">-->
-<!--                <input type="checkbox" class="form-check-input" id="showAllCategories">-->
-<!--                <label class="form-check-label" for="showAllCategories">Show All Categories</label>-->
-<!--            </div>-->
-
             <ol class="list-group list-group-numbered">
 
-                <!--                <li class="list-group-item d-flex justify-content-between align-items-start"-->
-                <!--                    th:each="category : ${categories}">-->
-                <!--                    <div class="ms-2 me-auto">-->
-                <!--                        <a th:href="@{/list/user/category/{categoryName}(categoryName=${category})}"-->
-                <!--                           class="list-item-link" data-category="${category}">-->
-                <!--                            <span th:text="${category}"></span>-->
-                <!--                            (<span th:text="${categoryCounts[category]}"></span> lists)-->
-                <!--                        </a>-->
-                <!--                    </div>-->
-                <!--                    <span class="badge bg-primary rounded-pill" th:text="${categoryCounts[category]}"></span>-->
-                <!--                </li>-->
+<!--                                <li class="list-group-item d-flex justify-content-between align-items-start"-->
+<!--                                    th:each="category : ${categories}">-->
+<!--                                    <div class="ms-2 me-auto">-->
+<!--                                        <a th:href="@{/list/user/category/{categoryName}(categoryName=${category})}"-->
+<!--                                           class="list-item-link" data-category="${category}">-->
+<!--                                            <span th:text="${category}"></span>-->
+<!--                                            (<span th:text="${categoryCounts[category]}"></span> lists)-->
+<!--                                        </a>-->
+<!--                                    </div>-->
+<!--                                    <span class="badge bg-primary rounded-pill"><span th:if="${categoryCounts[category] > 0}"-->
+<!--                                                                                      th:text="${categoryCounts[category]} + ' Lists'"></span>-->
+<!--                                    <span th:unless="${categoryCounts[category] > 0}">0 Lists</span>-->
+<!--                                    </span>-->
+<!--                                    <span class="badge bg-primary rounded-pill" th:text="${categoryCounts[category]}"></span>-->
+<!--                                </li>-->
 
                 <li class="list-group-item d-flex justify-content-between align-items-start">
                     <div class="ms-2 me-auto">
@@ -126,8 +125,7 @@
             <!-- list-content.html -->
             <ul class="list-group">
                 <li class="list-group-item" th:if="${not #lists.isEmpty(shoppingLists)}" th:each="list : ${shoppingLists}">
-                    <a th:href="@{/list/details/{listId}(listId=${list.id})}" th:text="${list.name}"
-                       class="list-link"></a>
+                    <a th:href="@{/list/details/{listId}(listId=${list.id})}" th:text="${list.name}"  class="list-link"></a>
                 </li>
                 <li class="list-group-item" th:if="${#lists.isEmpty(shoppingLists)}">
                     No lists found in this category.
@@ -173,54 +171,9 @@
             });
         }
 
-<!--        function loadListNames(category) {-->
-<!--           // Use AJAX to fetch the list names for the specified category-->
-<!--           $.ajax({-->
-<!--              url: "/list/user/category/" + category,-->
-<!--              method: "GET",-->
-<!--              success: function (response) {-->
-<!--              // Update the list names on the right side of the page-->
-<!--              $("#list-names").html(response);-->
-<!--        },-->
-<!--        error: function () {-->
-<!--            console.log("Error fetching list names.");-->
-<!--        }-->
     }
     });
 </script>
-
-// Handle checkbox change event
-<!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
-<!--<script>-->
-<!--    $(document).ready(function () {-->
-<!--        // Initially, show only categories with lists-->
-<!--        showCategoriesWithLists();-->
-
-<!--        // Handle checkbox change event-->
-<!--        $("#showAllCategories").change(function () {-->
-<!--            if (this.checked) {-->
-<!--                showAllCategories();-->
-<!--            } else {-->
-<!--                showCategoriesWithLists();-->
-<!--            }-->
-<!--        });-->
-
-<!--        function showAllCategories() {-->
-<!--            $(".list-group-item").show();-->
-<!--        }-->
-
-<!--        function showCategoriesWithLists(categoryCounts) {-->
-<!--            $(".list-group-item").each(function () {-->
-<!--                if ($(this).find(".badge").text() === 0) {-->
-<!--                    $(this).hide();-->
-<!--                } else {-->
-<!--                    $(this).show();-->
-<!--                }-->
-<!--            });-->
-<!--        }-->
-<!--    });-->
-
-<!--</script>-->
 
 </body>
 </html>
