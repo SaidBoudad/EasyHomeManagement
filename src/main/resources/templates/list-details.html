@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template-navbar"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Grocery List Service</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/webjars/bootstrap-icons/1.10.5/font/bootstrap-icons.css">
+    <style>
+        .main-table {
+            width: 70%; /* Set the first table to take 70% of the center */
+            margin: 0 auto; /* Center the table horizontally */
+        }
+
+    </style>
+</head>
+<body>
+<div layout:fragment="content1">
+    <div class="container mt-2 ">
+        <div class="row">
+            <h1>List Details</h1>
+        </div>
+        <!--    <form th:if="${#authorization.expression('hasRole(''USER'')')}" method="get" th:action="@{/users/admin}">-->
+        <!--        <label>User Name</label>-->
+        <!--        <input type="text" name="keyword" th:value="${keyword}">-->
+        <!--        <button type="submit" class="btn btn-primary">-->
+        <!--            <i class="bi bi-search"></i>-->
+        <!--        </button>-->
+        <!--    </form>-->
+        <table class="table table-dark table-border">
+            <thead class="table-dark">
+            <tr>
+                <th>List Name</th>
+                <th>List Category</th>
+                <th>Number Of Item</th>
+                <th>Creation Date</th>
+                <th>Client Owner</th>
+            </tr>
+            </thead>
+
+            <!--        <tbody>-->
+            <!--        <tr th:if="${listDetails != null}">-->
+            <!--            <td th:text="${listDetails.name}"></td>-->
+            <!--            <td th:text="${listDetails.numberOfItem}"></td>-->
+            <!--            <td th:text="${listDetails.dateCreated}"></td>-->
+            <!--            <td th:text="${listDetails.clientDTO}"></td>-->
+            <!--        </tr>-->
+            <!--        </tbody>-->
+            <tbody>
+            <tr th:each="detail : ${listDetails}">
+                <td th:text="${detail.name}"></td>
+                <td th:text="${detail.category}"></td>
+                <td th:text="${detail.numberOfItem}"></td>
+                <td th:text="${detail.dateCreated}"></td>
+                <td th:text="${detail.clientDTO.clientName}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <!-- Table of items -->
+        <div class="row justify-content-center"> <!-- Center the following table -->
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Item Description</th>
+                    <!-- Add more columns as needed for item details -->
+                </tr>
+                </thead>
+                <tbody>
+                <!--                <tr th:each="item : ${detail.items}">-->
+                <!--                    <td th:text="${item.name}"></td>-->
+                <!--                    <td th:text="${item.description}"></td>-->
+                <!--                    &lt;!&ndash; Add more columns for other item details &ndash;&gt;-->
+                <!--                </tr>-->
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col-lg-3">
+                    <a th:href="@{/item/user/create}" class="btn btn-secondary">Add New Item To This List</a>
+                </div>
+                <br>
+            </div>
+        </div>
+        </tbody>
+
+        </table>
+    </div>
+    <div th:if="${listDetails == null}">
+        <p>No details found for this list.</p>
+    </div>
+</div>
+</div>
+</body>
+</html>

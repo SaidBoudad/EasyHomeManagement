@@ -125,7 +125,9 @@
             <!-- list-content.html -->
             <ul class="list-group">
                 <li class="list-group-item" th:if="${not #lists.isEmpty(shoppingLists)}" th:each="list : ${shoppingLists}">
-                    <a th:href="@{/list/details/{listId}(listId=${list.id})}" th:text="${list.name}"  class="list-link"></a>
+                    <a th:href="@{/list/user/details (listId=${list.id})}" th:text="${list.name}" class="list-link">
+                    <span th:text="${list.id}"></span>
+                    </a>
                 </li>
                 <li class="list-group-item" th:if="${#lists.isEmpty(shoppingLists)}">
                     No lists found in this category.
@@ -133,14 +135,13 @@
             </ul>
             <p th:text="${customMessage}" class="custom-message"></p>
 
+
         </div>
 
         <footer>
             <div class="container">
-                <p>&copy; 2023 Your App. All rights reserved.</p>
+                <p>&copy; 2023 Grocery-List-Service. All rights reserved.</p>
             </div>
-
-
         </footer>
     </div>
 </div>
@@ -174,6 +175,9 @@
     }
     });
 </script>
+
+
+
 
 </body>
 </html>

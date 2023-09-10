@@ -20,6 +20,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,7 +53,7 @@ public class ShoppingListController {
         return "create-list";
     }
 
-
+    //save the new list
     @PostMapping("/user/save")
     @PreAuthorize("hasRole('USER')")
     public String createShoppingList(@ModelAttribute("list") ShoppingList shoppingList,
@@ -71,6 +73,7 @@ public class ShoppingListController {
         return "create-list";
     }
 
+    //get lists in specific category
     @GetMapping("/user/category/{category}")
     public String getListsByCategory(@PathVariable("category") ListCategory category, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -84,11 +87,24 @@ public class ShoppingListController {
             model.addAttribute("categoryCounts", categoryCounts);
         } else {
             model.addAttribute("shoppingLists", shoppingLists);
+
+            // Create a list of Map objects with listID and listName
+            List<Map<String, Object>> listDetails = new ArrayList<>();
+            for (ShoppingList shoppingList : shoppingLists) {
+                Map<String, Object> details = new HashMap<>();
+                details.put("listId", shoppingList.getId());
+                details.put("listName", shoppingList.getName());
+                listDetails.add(details);
+            }
+            model.addAttribute("listDetails", listDetails); // Add listDetails to the model
+
+
             model.addAttribute("categoryCounts", categoryCounts);
         }
         return "home-page"; // Return the main template name
     }
 
+    //get number of lists on each category
     @GetMapping("/user/category-counts")
     @ResponseBody
     public Map<String, Long> getCategoryCountsForClient() {
@@ -105,17 +121,19 @@ public class ShoppingListController {
 
 
     // Endpoint to get a specific shopping list by ID
-//    @GetMapping("/{listId}")
-//    @PreAuthorize("hasRole('USER')")
-//    public String getShoppingListById(@PathVariable Long listId) {
-//        ShoppingList shoppingList = shoppingListService.getShoppingListById(listId);
-//        if (shoppingList != null) {
-//            return null;
-//        } else {
-//            return null;
-//        }
-//    }
-//
+    @GetMapping("/user/details")
+    @PreAuthorize("hasRole('USER')")
+    public String getListDetails(Model model , long listId) {
+        ShoppingList shoppingList = shoppingListService.getShoppingListById(listId);
+        if (shoppingList == null) {
+            return "List not found";
+        } else {
+            model.addAttribute("listDetails", shoppingList);
+            return "list-details";
+        }
+
+    }
+
 
 
 

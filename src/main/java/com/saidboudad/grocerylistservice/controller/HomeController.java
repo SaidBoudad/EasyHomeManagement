@@ -54,4 +54,6 @@ public class HomeController {
     public String getHomeForAllFromLogin(Model model) {
         return "home-all";
     }
+
+
 }
