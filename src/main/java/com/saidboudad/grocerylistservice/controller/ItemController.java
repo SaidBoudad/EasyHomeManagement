@@ -2,17 +2,19 @@ package com.saidboudad.grocerylistservice.controller;
 
 import com.saidboudad.grocerylistservice.DTOs.ItemRequestDTO;
 import com.saidboudad.grocerylistservice.entity.Item;
+import com.saidboudad.grocerylistservice.entity.ShoppingList;
 import com.saidboudad.grocerylistservice.service.client.ClientService;
 import com.saidboudad.grocerylistservice.service.item.ItemService;
 import com.saidboudad.grocerylistservice.service.shppinglistService.ShoppingListService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/item")
 public class ItemController {
 
@@ -27,6 +29,18 @@ public class ItemController {
         this.clientService = clientService;
     }
 
+    @PostMapping("/user/add")
+    public String addItem(@ModelAttribute("itemRequest") ItemRequestDTO itemRequestDto,
+                          Model model) {
+        Item createdItem = itemService.addItem(itemRequestDto);
+        if (createdItem != null) {
+            ShoppingList shoppingList = shoppingListService.getShoppingListById(itemRequestDto.getShoppingListId());
+            model.addAttribute("listDetails", shoppingList);
+            return "list-details";
+        } else {
+            return "bad request";
+        }
+    }
 
     @GetMapping("/{itemId}")
     public ResponseEntity<Item> getItem(@PathVariable Long itemId) {
@@ -46,22 +60,13 @@ public class ItemController {
     }
 
     // Get all items for a given list ID
-    @GetMapping("/list/{listId}")
+    @GetMapping("/user/list/{listId}")
     public List<Item> getAllItemsForList(@PathVariable Long listId) {
         return itemService.getAllItemsForList(listId);
     }
 
-    @PostMapping
-    public ResponseEntity<Item> createItem(@RequestBody ItemRequestDTO itemRequest) {
-        Item createdItem = itemService.addItem(itemRequest);
-        if (createdItem != null) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdItem);
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-    }
 
-    @PutMapping("/{itemId}")
+    @PutMapping("/user/{itemId}")
     public ResponseEntity<Item> putItem(@PathVariable Long itemId, @RequestBody ItemRequestDTO itemRequest) {
         Item item = itemService.updateItem(itemId, itemRequest);
         if (item != null) {

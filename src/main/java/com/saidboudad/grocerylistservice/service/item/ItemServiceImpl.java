@@ -42,7 +42,6 @@ public class ItemServiceImpl implements ItemService {
             item.setShoppingList(shoppingList);
             item.setClient(client);
             itemRepository.save(item);
-            System.out.println(item.getId().toString()+"  after ");
             return item;
         } else {
             throw new UserNotFoundException(itemRequestDTO.getClientId());

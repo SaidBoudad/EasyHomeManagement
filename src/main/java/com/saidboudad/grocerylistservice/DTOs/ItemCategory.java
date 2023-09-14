@@ -7,6 +7,5 @@ public enum ItemCategory {
         CLEANING,
         CHILDREN,
         FRUIT,
-
-
+        OTHER,
 }

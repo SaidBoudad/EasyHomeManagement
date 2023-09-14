@@ -15,7 +15,6 @@
             width: 70%; /* Set the first table to take 70% of the center */
             margin: 0 auto; /* Center the table horizontally */
         }
-
     </style>
 </head>
 <body>
@@ -41,15 +40,6 @@
                 <th>Client Owner</th>
             </tr>
             </thead>
-
-            <!--        <tbody>-->
-            <!--        <tr th:if="${listDetails != null}">-->
-            <!--            <td th:text="${listDetails.name}"></td>-->
-            <!--            <td th:text="${listDetails.numberOfItem}"></td>-->
-            <!--            <td th:text="${listDetails.dateCreated}"></td>-->
-            <!--            <td th:text="${listDetails.clientDTO}"></td>-->
-            <!--        </tr>-->
-            <!--        </tbody>-->
             <tbody>
             <tr th:each="detail : ${listDetails}">
                 <td th:text="${detail.name}"></td>
@@ -60,38 +50,89 @@
             </tr>
             </tbody>
         </table>
-        <!-- Table of items -->
-        <div class="row justify-content-center"> <!-- Center the following table -->
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Item Name</th>
-                    <th>Item Description</th>
-                    <!-- Add more columns as needed for item details -->
-                </tr>
-                </thead>
-                <tbody>
-                <!--                <tr th:each="item : ${detail.items}">-->
-                <!--                    <td th:text="${item.name}"></td>-->
-                <!--                    <td th:text="${item.description}"></td>-->
-                <!--                    &lt;!&ndash; Add more columns for other item details &ndash;&gt;-->
-                <!--                </tr>-->
-                </tbody>
-            </table>
+        <!-- Column for Item Form -->
+        <div class="container mt-2">
             <div class="row">
-                <div class="col-lg-3">
-                    <a th:href="@{/item/user/create}" class="btn btn-secondary">Add New Item To This List</a>
+                <div class="col-md-6">
+                    <form th:action="@{/item/user/add}" th:object="${itemRequestDto}" method="POST">
+                        <h2>Add New Item To This List</h2>
+                        <input type="hidden" name="shoppingListId" th:value="${listDetails.id}">
+                        <div class="row flex">
+                            <div class="col-md-6">
+                                <label for="itemName">Item Name</label>
+                                <input type="text" class="form-control" id="itemName" name="name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="itemCategory">Item Category</label>
+                                <select class="form-control" id="itemCategory" name="itemCategory" required>
+                                    <option value="CUISINE">Cuisine</option>
+                                    <option value="HEALTH">Health</option>
+                                    <option value="CLEANING">Cleaning</option>
+                                    <option value="CHILDREN">Children</option>
+                                    <option value="FRUIT">Fruit</option>
+                                    <option value="OTHER">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="itemQuantity">Quantity</label>
+                                <input type="number" class="form-control" id="itemQuantity" name="quantity" required>
+                            </div>
+                            <input type="hidden" name="clientId" th:value="${listDetails.clientDTO.id}">
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
                 </div>
-                <br>
+                <button type="submit" class="btn btn-primary">Add Item</button>
+                </form>
             </div>
         </div>
-        </tbody>
+    </div>
 
-        </table>
+    <!-- Table of items -->
+
+    <div class="container mt-2 ">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-dark table-border">
+                    <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Item Category</th>
+                        <th>Item Quantity</th>
+                        <th>Item Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                                    <tr th:each="item : ${listDetails.items}">
+                                        <td th:text="${item.name}"></td>
+                                        <td th:text="${item.itemCategory}"></td>
+                                        <td th:text="${item.quantity}"></td>
+                                        <td th:text="${item.date}"></td>
+                                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    <div th:if="${listDetails == null}">
-        <p>No details found for this list.</p>
-    </div>
+
+
+</div>
+<!--            <div class="row">-->
+<!--                <div class="col-lg-3">-->
+<!--                    <a th:href="@{/item/user/create}" class="btn btn-secondary">Add New Item To This List</a>-->
+<!--                </div>-->
+<!--                <br>-->
+<!--            </div>-->
+</div>
+</tbody>
+
+</table>
+</div>
+<div th:if="${listDetails == null}">
+    <p>No details found for this list.</p>
+</div>
 </div>
 </div>
 </body>
