@@ -28,52 +28,26 @@
                 <li class="nav-item"><a class="nav-link" href="#">Download Apps</a></li>
             </ul>
 
-<!--            <ul class="navbar-nav ml-auto">-->
-<!--                <li class="nav-item dropdown">-->
-<!--                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">-->
-<!--                        <span th:text="${#authentication.isAuthenticated() ? authentication.name : 'Sign In'}"></span>-->
-<!--                    </a>-->
-<!--                    <ul class="dropdown-menu">-->
-<!--                        <li th:if="${#authentication.isAuthenticated()}">-->
-<!--                            <form th:action="@{/logout}" method="post">-->
-<!--                                <button class="dropdown-item" type="submit">Logout</button>-->
-<!--                            </form>-->
-<!--                        </li>-->
-<!--                        <li th:unless="${#authentication.isAuthenticated()}">-->
-<!--                            <a class="dropdown-item" th:href="@{/signin}">Sign In</a>-->
-<!--                        </li>-->
-<!--                        <li th:if="${#authentication.isAuthenticated()}">-->
-<!--                            <a class="dropdown-item" href="#">Profile</a>-->
-<!--                        </li>-->
-<!--                        <li th:unless="${#authentication.isAuthenticated()}">-->
-<!--                            <a class="dropdown-item" th:href="@{/users/user/create}">Create New User</a>-->
-<!--                        </li>-->
-<!--                    </ul>-->
-<!--                </li>-->
-<!--            </ul>-->
-
-
-
-
-            <ul class="navbar-nav " float-end>
-                <li>
-                    <form  th:action="@{/signin}">
-                        <li class="nav-item"><a class="nav-link" th:href="@{/signin}">Sign In</a></li>
-                    </form>
-                </li>
-                <li class="nav-item dropdown">
+            <ul class="navbar-nav" float-end>
+                <li th:if="${#authorization.expression('isAuthenticated()')}" class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                        <span th:text="${#authentication.name}"></span></a>
+                        <span th:text="${#authentication.name}"></span>
+                    </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <form  th:action="@{/logout}">
-                                <button class="dropdown-item" type="submit">logout</button>
+                            <form th:action="@{/logout}">
+                                <button class="dropdown-item" type="submit">Logout</button>
                             </form>
                         </li>
                         <li><a class="dropdown-item" href="#">Profile</a></li>
                     </ul>
                 </li>
-                <li><a class="nav-link" th:href="@{/users/user/create}">Create New User</a></li>
+                <li th:unless="${#authorization.expression('isAuthenticated()')}">
+                    <a class="nav-link" th:href="@{/signin}">Sign In</a></li>
+                </li>
+                <li th:unless="${#authorization.expression('isAuthenticated')}">
+                    <a class="nav-link" th:href="@{/users/user/create}">Create New User</a>
+                </li>
             </ul>
         </div>
     </div>

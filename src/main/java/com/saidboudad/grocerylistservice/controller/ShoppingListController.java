@@ -5,7 +5,6 @@ import com.saidboudad.grocerylistservice.DTOs.ShoppingListRequest;
 import com.saidboudad.grocerylistservice.entity.Client;
 import com.saidboudad.grocerylistservice.entity.ShoppingList;
 import com.saidboudad.grocerylistservice.exceptions.UserNotFoundException;
-import com.saidboudad.grocerylistservice.repository.ShoppingListRepository;
 import com.saidboudad.grocerylistservice.service.client.ClientService;
 import com.saidboudad.grocerylistservice.service.shppinglistService.ShoppingListService;
 import org.slf4j.Logger;
@@ -29,13 +28,13 @@ import java.util.Map;
 @RequestMapping("/list")
 public class ShoppingListController {
 
-    private  final ShoppingListService shoppingListService;
-    private ClientService clientService;
+    private final ShoppingListService shoppingListService;
+    private final ClientService clientService;
     private final Logger log = LoggerFactory.getLogger(ShoppingListController.class);
     
 
 
-    public ShoppingListController(ShoppingListService shoppingListService, ShoppingListRepository shoppingListRepository, ClientService clientService) {
+    public ShoppingListController(ShoppingListService shoppingListService, ClientService clientService) {
         this.shoppingListService = shoppingListService;
         this.clientService = clientService;
     }
@@ -115,6 +114,26 @@ public class ShoppingListController {
         Map<String, Long> categoryCounts = shoppingListService.getCategoryCountsForUser(client.getClientName());
 
         return categoryCounts;
+    }
+
+    //Get edit list page
+    @GetMapping("/user/edit")
+    @PreAuthorize("hasRole('USER')")
+    public String getEditListPage( Model model,
+                                   @RequestParam Long id){
+        ShoppingList shoppingList = shoppingListService.getShoppingListById(id);
+        if (shoppingList == null) throw new RuntimeException("List Doesn't Exist");
+        model.addAttribute("shoppingList", shoppingList);
+        return "edit-list";
+    }
+
+    // Handle form submission to update list details
+    @PostMapping("/edit")
+    @PreAuthorize("hasRole('USER')")
+    public String updateListDetails(@ModelAttribute("shoppingList") ShoppingList shoppingList) {
+        // Update the shopping list details in the service layer
+ //       shoppingListService.updateShoppingList(shoppingList);
+        return "redirect:/list/user"; // Redirect to the user's list page
     }
 
 

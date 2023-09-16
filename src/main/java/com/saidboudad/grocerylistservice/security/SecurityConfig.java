@@ -31,16 +31,23 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 //      httpSecurity.csrf().disable(); //this is for disablinging the csrf when we are in stateless security using JWT towken
 
-        httpSecurity.authorizeHttpRequests((authz) -> authz.requestMatchers("/","/logout")
-                                    .permitAll()
-                                    .anyRequest()
-                                    .authenticated())
-                    .formLogin(formLogin -> formLogin.loginPage("/login")
-                                    .defaultSuccessUrl("/home")
-                                    .permitAll())
-                   .exceptionHandling((exceptionHandling) -> exceptionHandling
-                                    .accessDeniedPage("/notAuthorized"))
-                   .rememberMe(withDefaults());
+        httpSecurity.authorizeHttpRequests((authz) -> authz
+                        .requestMatchers("/", "/logout")
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated())
+                .formLogin(formLogin -> formLogin
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/home")
+                        .permitAll())
+                .exceptionHandling((exceptionHandling) -> exceptionHandling
+                        .accessDeniedPage("/notAuthorized"))
+                .logout(logoutUrl -> logoutUrl
+                        .logoutUrl("/logout") // Specify the URL for logout
+                        .logoutSuccessUrl("/login?logout=true") // Redirect to a URL after logout
+                        .invalidateHttpSession(true) // Invalidate the HttpSession
+                        .permitAll()) // Allow access to the logout URL)
+                .rememberMe(withDefaults());
         httpSecurity.userDetailsService(myUserDetailsService);
         return httpSecurity.build();
 
@@ -57,15 +64,14 @@ public class SecurityConfig {
     }
 
 
-
     //     This part for implementing InMemoryAuthentication (deactivated)
 
     //@Bean
-    public InMemoryUserDetailsManager inMemoryUserDetailsManager(){
+    public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
         InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager(
                 User.withUsername("user1").password(passwordEncoder.encode("1234")).roles("USER").build(),
                 User.withUsername("user2").password(passwordEncoder.encode("2345")).roles("USER").build(),
-                User.withUsername("admin").password(passwordEncoder.encode("4567")).roles("USER","ADMIN").build()
+                User.withUsername("admin").password(passwordEncoder.encode("4567")).roles("USER", "ADMIN").build()
         );
         return inMemoryUserDetailsManager;
     }
@@ -90,7 +96,7 @@ public class SecurityConfig {
     //  FOREIGN KEY (username) REFERENCES users (username) ON DELETE CASCADE
     //);
     // @Bean
-    public JdbcUserDetailsManager jdbcUserDetailsManager(DataSource dataSource){ //means that I use the DB which in the properties file
+    public JdbcUserDetailsManager jdbcUserDetailsManager(DataSource dataSource) { //means that I use the DB which in the properties file
         JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
         return jdbcUserDetailsManager;
     }

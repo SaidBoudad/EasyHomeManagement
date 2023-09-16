@@ -3,6 +3,9 @@ package com.saidboudad.grocerylistservice.controller;
 import com.saidboudad.grocerylistservice.entity.Client;
 import com.saidboudad.grocerylistservice.service.client.ClientService;
 import com.saidboudad.grocerylistservice.service.shppinglistService.ShoppingListService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,7 +40,6 @@ public class HomeController {
         // Bind the category counts to the category list
         model.addAttribute("categories", categoryCounts.keySet());
         model.addAttribute("categoryCounts", categoryCounts);
-
         return "home-page";
     }
 
@@ -46,14 +48,21 @@ public class HomeController {
     public String homeForAll(Model model) {
         return "home-unauthenticated";
     }
+
     @GetMapping("/signin")
     public String getLoginPage(Model model) {
         return "login";
     }
-    @GetMapping("/logout")
-    public String getHomeForAllFromLogin(Model model) {
-        return "home-all";
-    }
 
+    @GetMapping("/logout")
+    public String handleLogout(HttpServletRequest request, HttpServletResponse response) {
+        // Perform any additional logout logic if needed
+        SecurityContextHolder.clearContext(); // Clear the security context
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate(); // Invalidate the HttpSession
+        }
+        return "redirect:/login?logout=true"; // Redirect to the login page with a logout parameter
+    }
 
 }

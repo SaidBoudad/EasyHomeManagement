@@ -55,7 +55,6 @@ public class ShoppingListServiceImpl implements ShoppingListService {
     public Map<String, Long> getCategoryCountsForUser(String clientName) {
         List<Object[]> categoryCounts = shoppingListRepository.countShoppingListsByCategoryForUser(clientName);
         Map<String, Long> countsMap = new HashMap<>();
-
         if (categoryCounts != null && !categoryCounts.isEmpty()) {
             for (Object[] result : categoryCounts) {
                 ListCategory category = (ListCategory) result[0];
@@ -63,7 +62,6 @@ public class ShoppingListServiceImpl implements ShoppingListService {
                 countsMap.put(category.toString(), count);}
 
         }
-
         return countsMap;
     }
 
@@ -82,6 +80,7 @@ public class ShoppingListServiceImpl implements ShoppingListService {
             return null;
         }
     }
+
 
     @Transactional
     @Override

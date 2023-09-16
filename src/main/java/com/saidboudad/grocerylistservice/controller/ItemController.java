@@ -29,6 +29,7 @@ public class ItemController {
         this.clientService = clientService;
     }
 
+    //add item to a list of client
     @PostMapping("/user/add")
     public String addItem(@ModelAttribute("itemRequest") ItemRequestDTO itemRequestDto,
                           Model model) {
@@ -41,6 +42,12 @@ public class ItemController {
             return "bad request";
         }
     }
+
+
+
+
+
+
 
     @GetMapping("/{itemId}")
     public ResponseEntity<Item> getItem(@PathVariable Long itemId) {

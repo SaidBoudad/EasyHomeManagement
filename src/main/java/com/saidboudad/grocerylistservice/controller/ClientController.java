@@ -58,6 +58,18 @@ public class ClientController {
 //        return "redirect:/users?keyword="+user.getClientName(); // to redirect admin to the list of clients
     }
 
+    //Get edit page
+    @GetMapping("/admin/edit")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String getEditClientPage( Model model, Long id,String keyword,int page){
+        Client client = clientService.getClientById(id);
+        if (client == null) throw new RuntimeException("User Doesn't Exist");
+        model.addAttribute("client", client);
+        model.addAttribute("page",page);
+        model.addAttribute("keyword",keyword);
+        return "edit-user";
+    }
+
     //Endpoint to update a user
     @PostMapping("/admin/update")
     @PreAuthorize("hasRole('ADMIN')")
@@ -114,17 +126,7 @@ public class ClientController {
         clientService.deleteClientById(id);
         return "redirect:/users/admin?page="+page+"&keyword="+keyword;
     }
-    //Get edit page
-    @GetMapping("/admin/edit")
-    @PreAuthorize("hasRole('ADMIN')")
-    public String getEditeClient( Model model, Long id,String keyword,int page){
-        Client client = clientService.getClientById(id);
-        if (client == null) throw new RuntimeException("User Doesn't Exist");
-        model.addAttribute("client", client);
-        model.addAttribute("page",page);
-        model.addAttribute("keyword",keyword);
-        return "edit-user";
-    }
+
 
 
 
