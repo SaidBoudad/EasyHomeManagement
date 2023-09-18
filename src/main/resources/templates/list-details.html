@@ -23,7 +23,7 @@
         <div class="row">
             <h1>List Details</h1>
             <a th:if="${#authorization.expression('hasRole(''USER'')')}"
-               class="nav-link" th:href="@{/list/user/edit}">
+               class="nav-link" th:href="@{/list/user/edit(id=${listDetails.id})}">
                 <i class="bi bi-pen"></i>Edit This List
             </a>
         </div>

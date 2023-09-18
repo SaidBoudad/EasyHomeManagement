@@ -31,7 +31,7 @@
                 <div class="card">
                     <h1 class="card-header text-center">Create New List</h1>
                     <div class="card-body">
-                        <form th:action="@{/list/user/save}" th:object="${list}" method="POST">
+                        <form th:action="@{/list/user/save(clientId=${clientId})}" th:object="${list}" method="POST">
 
                             <div class="form-group">
                                 <label>List Name</label>

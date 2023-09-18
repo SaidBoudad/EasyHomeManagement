@@ -1,13 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template-navbar">
 <head>
-    <!-- Include your header content here -->
+    <meta charset="UTF-8">
+    <title>Grocery List Service</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/webjars/bootstrap-icons/1.10.5/font/bootstrap-icons.css">
 </head>
 <body>
-<div class="container mt-2">
+<div layout:fragment="content1">
+    <div class="container mt-2 ">
     <h1>Edit List</h1>
     <!-- Display the form to edit the list details -->
-    <form th:action="@{/list/user/edit}" th:object="${shoppingList}" method="post">
+    <form th:action="@{/list/user/update}" th:object="${shoppingList}" method="post">
         <input type="hidden" th:field="*{id}" />
         <div class="form-group">
             <label for="listName">List Name:</label>
@@ -16,17 +23,20 @@
         <div class="form-group">
             <label for="listCategory">List Category:</label>
             <select class="form-control" id="listCategory" th:field="*{category}">
-                <option value="CUISINE">Cuisine</option>
-                <option value="HEALTH">Health</option>
-                <option value="CLEANING">Cleaning</option>
-                <option value="CHILDREN">Children</option>
-                <option value="FRUIT">Fruit</option>
+                <option value="GROCERY">GROCERY</option>
+                <option value="TODO">TODO</option>
+                <option value="MOVIES">MOVIES</option>
+                <option value="SHOPPING">SHOPPING</option>
+                <option value="HOMEWORK">HOMEWORK</option>
+                <option value="TRAVEL">TRAVEL</option>
+                <option value="GIFT">GIFT</option>
                 <option value="OTHER">Other</option>
             </select>
         </div>
         <!-- Add more form fields for other list details -->
         <button type="submit" class="btn btn-primary">Save Changes</button>
     </form>
+</div>
 </div>
 </body>
 </html>

@@ -14,7 +14,7 @@
 
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="javascript:void(0)">Logo</a>
+        <a class="navbar-brand" th:href="@{/}">Home</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -35,8 +35,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Services</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">My Lists</a></li>
-                        <li><a class="dropdown-item" href="#">My Items</a></li>
+                        <li><a class="dropdown-item" th:href="@{/home}">My Lists</a></li>
+                        <li><a class="dropdown-item" th:href="@{/}">Home</a></li>
                     </ul>
                 </li>
             </ul>

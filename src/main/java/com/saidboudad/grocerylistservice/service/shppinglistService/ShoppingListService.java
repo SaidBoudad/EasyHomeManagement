@@ -11,12 +11,10 @@ public interface ShoppingListService {
 
     public ShoppingList createShoppingList(String name, Long userId, ListCategory category) throws UserNotFoundException;
     ShoppingList getShoppingListById(Long listId);
-    ShoppingList updateShoppingList(Long listId, ShoppingList shoppingList);
+    ShoppingList updateShoppingList(Long id ,ShoppingList shoppingList);
     boolean deleteShoppingListById(Long listId);
-
     List<ShoppingList> getShoppingListsByClientId(Long userId);
     List<ShoppingList> getListsByCategoryAndUsername(ListCategory category,String username);
-
     Map<String, Long> getCategoryCountsForUser(String clientName);
 
 

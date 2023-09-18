@@ -39,7 +39,7 @@
                                 <button class="dropdown-item" type="submit">Logout</button>
                             </form>
                         </li>
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" th:href="@{/home}">My Lists</a></li>
                     </ul>
                 </li>
                 <li th:unless="${#authorization.expression('isAuthenticated()')}">

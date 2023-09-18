@@ -5,6 +5,7 @@ import com.saidboudad.grocerylistservice.DTOs.ItemCategory;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -38,10 +39,12 @@ public class Item {
     @ManyToOne
     @JoinColumn(name = "list_id")
     @JsonBackReference // Do not serialize this property (ShoppingList) to avoid recursion
+    @ToString.Exclude // Exclude shoppingList field from toString
     private ShoppingList shoppingList;
 
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false) // foreign key to the User entity
     @JsonBackReference // Do not serialize this property
+    @ToString.Exclude // Exclude client field from toString
     private Client client;
 }

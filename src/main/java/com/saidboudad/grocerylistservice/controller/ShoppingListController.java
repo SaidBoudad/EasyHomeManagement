@@ -116,7 +116,7 @@ public class ShoppingListController {
         return categoryCounts;
     }
 
-    //Get edit list page
+    //Get edit list form
     @GetMapping("/user/edit")
     @PreAuthorize("hasRole('USER')")
     public String getEditListPage( Model model,
@@ -128,12 +128,13 @@ public class ShoppingListController {
     }
 
     // Handle form submission to update list details
-    @PostMapping("/edit")
+    @PostMapping("/user/update")
     @PreAuthorize("hasRole('USER')")
-    public String updateListDetails(@ModelAttribute("shoppingList") ShoppingList shoppingList) {
+    public String updateListDetails(@ModelAttribute("shoppingList") ShoppingList shoppingList)
+    {
         // Update the shopping list details in the service layer
- //       shoppingListService.updateShoppingList(shoppingList);
-        return "redirect:/list/user"; // Redirect to the user's list page
+        shoppingListService.updateShoppingList(shoppingList.getId(),shoppingList);
+        return "redirect:/home"; // Redirect to the user's list page
     }
 
 
