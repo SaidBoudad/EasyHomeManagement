@@ -154,6 +154,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>grocery-list-service-aws-exe</finalName>
     </build>
 
 </project>
