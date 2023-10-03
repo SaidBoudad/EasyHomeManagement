@@ -46,7 +46,7 @@
                     <a class="nav-link" th:href="@{/signin}">Sign In</a></li>
                 </li>
                 <li th:unless="${#authorization.expression('isAuthenticated')}">
-                    <a class="nav-link" th:href="@{/users/user/create}">Create New User</a>
+                    <a class="nav-link" th:href="@{/users/create}">Create New User</a>
                 </li>
             </ul>
         </div>

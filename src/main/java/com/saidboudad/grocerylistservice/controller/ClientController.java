@@ -31,16 +31,14 @@ public class ClientController {
     }
 
     // Display the user creation form
-    @GetMapping("/user/create")
-    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/create")
     public String showCreateUserForm(Model model) {
         model.addAttribute("client", new Client());
         return "create-user";
     }
 
     // Endpoint to create a new user
-    @PostMapping("/user/save")
-    @PreAuthorize("hasRole('USER')")
+    @PostMapping("/save")
     public String createUser(Model model, @Valid Client client,
                              @RequestParam("confirmPass") String confirmPass,
                              BindingResult bindingResult) {

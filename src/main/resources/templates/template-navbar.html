@@ -24,7 +24,7 @@
                     <a class="nav-link" th:href="@{/list/user/create}">Create New List</a>
                 </li>
                 <li th:if="${#authorization.expression('hasRole(''ADMIN'')')}" class="nav-item" >
-                    <a class="nav-link" th:href="@{/users/user/create}">Create New User</a>
+                    <a class="nav-link" th:href="@{/users/create}">Create New User</a>
                 </li>
                 <li th:if="${#authorization.expression('hasRole(''ADMIN'')')}" class="nav-item">
                     <a class="nav-link" th:href="@{/users/admin}">All Users</a>
