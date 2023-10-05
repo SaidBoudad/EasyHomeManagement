@@ -14,7 +14,9 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        AppUser appUser=accountService.loadUserByUsername(username);
+        // Convert the username to lowercase
+        String lowercaseUsername = username.toLowerCase();
+        AppUser appUser=accountService.loadUserByUsername(lowercaseUsername);
         if (appUser == null) {
             throw new UsernameNotFoundException("Client with username : %s not found " + username);
         }

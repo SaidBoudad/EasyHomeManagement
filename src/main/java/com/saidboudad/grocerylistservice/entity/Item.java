@@ -37,7 +37,7 @@ public class Item {
     private LocalDateTime date;
 
     @ManyToOne
-    @JoinColumn(name = "list_id")
+    @JoinColumn(name = "list_id", nullable = false)
     @JsonBackReference // Do not serialize this property (ShoppingList) to avoid recursion
     @ToString.Exclude // Exclude shoppingList field from toString
     private ShoppingList shoppingList;

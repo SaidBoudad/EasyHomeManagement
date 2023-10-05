@@ -42,6 +42,8 @@ public class ClientController {
     public String createUser(Model model, @Valid Client client,
                              @RequestParam("confirmPass") String confirmPass,
                              BindingResult bindingResult) {
+        String clientNameLowerCase = client.getClientName().toLowerCase();
+        client.setClientName(clientNameLowerCase);
         if(bindingResult.hasErrors())return "create-user";
         try {
             Client createdClient = clientService.createClient(client,confirmPass);

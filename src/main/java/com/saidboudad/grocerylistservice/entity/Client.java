@@ -38,26 +38,14 @@ public class Client {
     @Transient
     private String confirmPass;
 
-    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Item> items;
 
 
-    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<ShoppingList> shoppingLists;
-
-
-    //code before removing : cascade = CascadeType.ALL, orphanRemoval = true , to solve the error
-    //"HibernateException: A collection with cascade="all-delete-orphan"
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-//    @JsonManagedReference
-//    private List<Item> items;
-//
-//
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-//    @JsonManagedReference
-//    private List<ShoppingList> shoppingLists;
 
     public ClientDTO toDTO() {
         ClientDTO dto = new ClientDTO();

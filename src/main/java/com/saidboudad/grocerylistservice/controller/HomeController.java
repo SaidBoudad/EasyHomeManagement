@@ -33,7 +33,7 @@ public class HomeController {
     public String getHomePageAuthenticated(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        Client client = clientService.findByUsername(userDetails.getUsername());
+        Client client = clientService.findByUsername(userDetails.getUsername().toLowerCase());
         // Get the categories and their counts for the user
         Map<String, Long> categoryCounts = shoppingListService.getCategoryCountsForUser(client.getClientName());
         model.addAttribute("client", client);
@@ -49,10 +49,10 @@ public class HomeController {
         return "home-unauthenticated";
     }
 
-    @GetMapping("/signin")
-    public String getLoginPage(Model model) {
-        return "login";
-    }
+//    @GetMapping("/signin")
+//    public String getLoginPage(Model model) {
+//        return "login";
+//    }
 
     @GetMapping("/logout")
     public String handleLogout(HttpServletRequest request, HttpServletResponse response) {
