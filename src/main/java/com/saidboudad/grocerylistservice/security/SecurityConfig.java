@@ -32,7 +32,8 @@ public class SecurityConfig {
 //      httpSecurity.csrf().disable(); //this is for disablinging the csrf when we are in stateless security using JWT towken
 
         httpSecurity.authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/", "/logout","/users/create","/users/save")
+                        .requestMatchers("/", "/logout","/users/create","/users/save","/password-reset",
+                                "/password-reset/**","/password-reset-form")
                         .permitAll()
                         .anyRequest()
                         .authenticated())

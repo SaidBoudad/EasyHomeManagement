@@ -32,7 +32,6 @@
                 <h1 class="card-header text-center">Create New User</h1>
                 <div class="card-body">
                     <form th:action="@{/users/save}" th:object="${client}" method="POST">
-
                         <div class="form-group">
                             <label>Username</label>
                             <input
@@ -76,7 +75,7 @@
                             <span class="text-danger" th:errors="*{confirmPass}"></span>
                         </div>
 
-                        <div class="box-footer">
+                        <div class="text-center">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </form>

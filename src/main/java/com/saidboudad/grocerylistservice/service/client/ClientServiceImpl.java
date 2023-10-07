@@ -148,5 +148,27 @@ public class ClientServiceImpl implements ClientService {
         return clientRepository.findByClientName(username);
     }
 
+    public Client findByClientNameAndEmail(String clientName, String email) {
+        return clientRepository.findByClientNameAndEmail(clientName, email);
+    }
+
+    public void updateClientPassword(Client client, String newPassword) {
+        // Encode the new password
+        String encodedPassword = passwordEncoder.encode(newPassword);
+
+        // Update the client's password
+        client.setPassword(encodedPassword);
+
+        // Update the corresponding AppUser entry
+        AppUser appUser = accountService.loadUserByUsername(client.getClientName());
+        if (appUser != null) {
+            appUser.setPassword(encodedPassword);
+            appUserRepo.save(appUser);
+        }
+
+        // Save the updated client to the repository
+        clientRepository.save(client);
+    }
+
 
 }

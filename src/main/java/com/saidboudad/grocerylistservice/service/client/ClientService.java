@@ -16,4 +16,6 @@ public interface ClientService {
     List<Client> getAllClients();
     Page<Client> getClientsByPage(String keyword, int page, int size, String sortOrder);
     Client findByUsername(String username);
+    Client findByClientNameAndEmail(String clientName, String email);
+    void updateClientPassword(Client client, String newPassword);
 }

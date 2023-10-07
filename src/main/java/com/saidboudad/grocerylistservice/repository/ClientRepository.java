@@ -9,7 +9,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Long> {
 
-    // Custom query method to find a client by clientName and by email.
+    // Custom query method to find a client by clientName and email.
+    Client findByClientNameAndEmail(String clientName, String email);
     Client findByClientName(String clientName);
     Client findByEmail(String email);
     Page<Client> findByClientNameContains(String kw, Pageable pageable);

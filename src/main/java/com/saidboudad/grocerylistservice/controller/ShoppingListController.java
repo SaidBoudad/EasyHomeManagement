@@ -45,7 +45,7 @@ public class ShoppingListController {
     public String showCreateListForm(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        Client client = clientService.findByUsername(userDetails.getUsername());
+        Client client = clientService.findByUsername(userDetails.getUsername().toLowerCase());
         model.addAttribute("list", new ShoppingList());
         model.addAttribute("client", client);
         model.addAttribute("clientId", client.getId()); // Add clientId to the model
@@ -77,7 +77,7 @@ public class ShoppingListController {
     public String getListsByCategory(@PathVariable("category") ListCategory category, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        Client client = clientService.findByUsername(userDetails.getUsername());
+        Client client = clientService.findByUsername(userDetails.getUsername().toLowerCase());
         List<ShoppingList> shoppingLists = shoppingListService.getListsByCategoryAndUsername(category, client.getClientName());
         Map<String, Long> categoryCounts = shoppingListService.getCategoryCountsForUser(client.getClientName());
 
