@@ -57,14 +57,12 @@ public class ClientServiceImpl implements ClientService {
         // Encode the password
         String encodedPassword = passwordEncoder.encode(client.getPassword());
         client.setPassword(encodedPassword);
-
         Client savedClient = clientRepository.save(client);
 
         // Create corresponding AppUser entry
         accountService.addNewUser(savedClient.getClientName()
                 , savedClient.getPassword()
                 , savedClient.getEmail());
-
         return savedClient;
     }
 
@@ -74,6 +72,7 @@ public class ClientServiceImpl implements ClientService {
 
     }
 
+    //This method to use by the Admin to update all properties of the client
     @Override
     public Client updateClient(Long clientId, Client updatedClient,String confirmPass) {
         Client existingClient = clientRepository.findById(clientId).orElse(null);
@@ -107,7 +106,6 @@ public class ClientServiceImpl implements ClientService {
                 appUser.setPassword(existingClient.getPassword());
                 appUserRepo.save(appUser);
             }
-
             return clientRepository.save(existingClient);
         }
         return null;
@@ -140,7 +138,6 @@ public class ClientServiceImpl implements ClientService {
         Sort sort = Sort.by(Sort.Direction.fromString(sortOrder), "id"); // Create Sort object
         Pageable pageable = PageRequest.of(page, size, sort); // Apply sort to pageable
         return clientRepository.findByClientNameContains(keyword,pageable);
-
     }
 
     @Override

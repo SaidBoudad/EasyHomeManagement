@@ -86,50 +86,6 @@ public class ShoppingListServiceImpl implements ShoppingListService {
     }
 
 
-//    @Transactional
-//    @Override
-//    public ShoppingList updateShoppingList(Long listId ,  ShoppingList shoppingList) {
-//        ShoppingList existingList = shoppingListRepository.findById(listId).orElse(null);
-//        if (existingList != null) {
-//            List<String> changes = new ArrayList<>();
-//            if (!existingList.getName().equals(shoppingList.getName())) {
-//                changes.add("Name changed from '" + existingList.getName() + "' to '" + shoppingList.getName() + "'");
-//                existingList.setName(shoppingList.getName());
-//            }
-//            if (existingList.getNumberOfItem() != shoppingList.getNumberOfItem()) {
-//                changes.add("Number of items changed from '" + existingList.getNumberOfItem() + "' to '" + shoppingList.getNumberOfItem() + "'");
-//                existingList.setNumberOfItem(shoppingList.getNumberOfItem());
-//            }
-//            // Check for changes in the category property
-//            if (existingList.getCategory() != shoppingList.getCategory()) {
-//                changes.add("Category changed from '" + existingList.getCategory() + "' to '" + shoppingList.getCategory() + "'");
-//                existingList.setCategory(shoppingList.getCategory());
-//            }
-//            if (!existingList.getItems().equals(shoppingList.getItems())) {
-//                changes.add("Items changed from " + existingList.getItems() + " to " + shoppingList.getItems());
-//                existingList.getItems().clear();
-//                existingList.getItems().addAll(shoppingList.getItems());
-//            }
-//
-//
-//
-//            if (!changes.isEmpty()) {
-//                // Fetch the associated User entity and convert it to UserDTO
-//                Client client = existingList.getClient();
-//                ClientDTO clientDTO = client.toDTO();
-//
-//                // Create a message containing the list of changes and the modification time
-//                String modificationMessage = String.join(", ", changes);
-//                existingList.setClientDTO(clientDTO);
-//                existingList.setLastChange(modificationMessage);
-//
-//                // Save the changes to the database
-//                return shoppingListRepository.save(existingList);
-//            }
-//        }
-//        return null;
-//    }
-
     @Transactional
     @Override
     public ShoppingList updateShoppingList(Long listId, ShoppingList shoppingList) {

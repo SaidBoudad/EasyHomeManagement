@@ -58,8 +58,8 @@ public class SecurityController {
             @RequestParam("email") String email,
             RedirectAttributes redirectAttributes
     ) {
-        // Check if the username and email match in your database
-        Client client = clientService.findByClientNameAndEmail(username, email);
+        // Check if the username and email match in the database
+        Client client = clientService.findByClientNameAndEmail(username.toLowerCase(), email);
 
         if (client != null) {
             // Generate a unique token (e.g., UUID)
@@ -75,7 +75,7 @@ public class SecurityController {
             tokenEntity.setExpirationTime(cal.getTime());
             passwordResetTokenRepo.save(tokenEntity);
 
-            // Send an email to the user with a link containing the reset token
+            //Send an email to the user with a link containing the reset token
             sendPasswordResetEmail(client.getEmail(), resetToken);
 
             // Redirect to a confirmation page

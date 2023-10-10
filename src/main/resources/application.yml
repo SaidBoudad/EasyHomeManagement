@@ -1,5 +1,5 @@
 server:
-  port: 500
+  port: 5000
 
 spring:
   application:
@@ -8,7 +8,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://dblistmangementsaidboudad-3.cnuro8frglgi.eu-west-2.rds.amazonaws.com:5432/grocery_list_service
     username: saidboudad
-    password: **********
+    password: ******
   jpa:
     hibernate:
       ddl-auto: update
@@ -18,8 +18,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: ********@gmail.com
-    password: ***********
+    username: ***
+    password: ***
 
     properties:
       mail:

@@ -32,7 +32,7 @@ public class SecurityConfig {
 //      httpSecurity.csrf().disable(); //this is for disablinging the csrf when we are in stateless security using JWT towken
 
         httpSecurity.authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/", "/logout","/users/create","/users/save","/password-reset",
+                        .requestMatchers("/","/users/create","/users/save","/password-reset",
                                 "/password-reset/**","/password-reset-form")
                         .permitAll()
                         .anyRequest()
@@ -51,6 +51,54 @@ public class SecurityConfig {
                 .rememberMe(withDefaults());
         httpSecurity.userDetailsService(myUserDetailsService);
         return httpSecurity.build();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         //    First way to do the Authorization : URL-based security (HTTP Security) focuses on securing HTTP endpoints
@@ -76,7 +124,6 @@ public class SecurityConfig {
         );
         return inMemoryUserDetailsManager;
     }
-
 
     //    This part is for implementing JDBCAuthentication (deactivated)
 

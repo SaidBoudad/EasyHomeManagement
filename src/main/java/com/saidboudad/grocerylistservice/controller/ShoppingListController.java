@@ -96,12 +96,11 @@ public class ShoppingListController {
                 listDetails.add(details);
             }
             model.addAttribute("listDetails", listDetails); // Add listDetails to the model
-
-
             model.addAttribute("categoryCounts", categoryCounts);
         }
         return "home-page"; // Return the main template name
     }
+
 
     //get number of lists on each category
     @GetMapping("/user/category-counts")
@@ -110,9 +109,7 @@ public class ShoppingListController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         Client client = clientService.findByUsername(userDetails.getUsername());
-
         Map<String, Long> categoryCounts = shoppingListService.getCategoryCountsForUser(client.getClientName());
-
         return categoryCounts;
     }
 
@@ -130,14 +127,10 @@ public class ShoppingListController {
     // Handle form submission to update list details
     @PostMapping("/user/update")
     @PreAuthorize("hasRole('USER')")
-    public String updateListDetails(@ModelAttribute("shoppingList") ShoppingList shoppingList)
-    {
-        // Update the shopping list details in the service layer
+    public String updateListDetails(@ModelAttribute("shoppingList") ShoppingList shoppingList) {
         shoppingListService.updateShoppingList(shoppingList.getId(),shoppingList);
         return "redirect:/home"; // Redirect to the user's list page
     }
-
-
 
 
     // Endpoint to get a specific shopping list by ID

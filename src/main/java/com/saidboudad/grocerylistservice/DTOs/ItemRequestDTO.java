@@ -11,6 +11,4 @@ public class ItemRequestDTO {
     private double quantity;
     private Long shoppingListId;
     private Long clientId;
-
-
 }

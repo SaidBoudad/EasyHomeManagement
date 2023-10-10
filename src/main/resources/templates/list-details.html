@@ -15,6 +15,7 @@
             width: 70%; /* Set the first table to take 70% of the center */
             margin: 0 auto; /* Center the table horizontally */
         }
+
     </style>
 </head>
 <body>
@@ -23,7 +24,8 @@
         <div class="row">
             <h1>List Details</h1>
             <a th:if="${#authorization.expression('hasRole(''USER'')')}"
-               class="nav-link" th:href="@{/list/user/edit(id=${listDetails.id})}">
+               class="nav-link" th:href="@{/list/user/edit(id=${listDetails.id})}"
+               style="display: flex; justify-content: center; align-items: center; width: 5cm; height: 1cm; background-color: orange; text-align: center; line-height: 1cm; border: 2px solid #FFA500; border-radius: 5px; text-decoration: none; color: white; font-weight: bold;">
                 <i class="bi bi-pen"></i>Edit This List
             </a>
         </div>
@@ -42,7 +44,7 @@
                 <td th:text="${detail.name}"></td>
                 <td th:text="${detail.category}"></td>
                 <td th:text="${detail.numberOfItem}"></td>
-                <td th:text="${detail.dateCreated}"></td>
+                <td th:text="${#temporals.format(detail.dateCreated, 'yyyy-MM-dd HH:mm:ss')}"></td>
                 <td th:text="${detail.clientDTO.clientName}"></td>
             </tr>
             </tbody>
@@ -102,12 +104,12 @@
                     </tr>
                     </thead>
                     <tbody>
-                                    <tr th:each="item : ${listDetails.items}">
-                                        <td th:text="${item.name}"></td>
-                                        <td th:text="${item.itemCategory}"></td>
-                                        <td th:text="${item.quantity}"></td>
-                                        <td th:text="${item.date}"></td>
-                                    </tr>
+                    <tr th:each="item : ${listDetails.items}">
+                        <td th:text="${item.name}"></td>
+                        <td th:text="${item.itemCategory}"></td>
+                        <td th:text="${item.quantity}"></td>
+                        <td th:text="${#temporals.format(item.date, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -116,17 +118,7 @@
 
 
 </div>
-<!--            <div class="row">-->
-<!--                <div class="col-lg-3">-->
-<!--                    <a th:href="@{/item/user/create}" class="btn btn-secondary">Add New Item To This List</a>-->
-<!--                </div>-->
-<!--                <br>-->
-<!--            </div>-->
-</div>
-</tbody>
 
-</table>
-</div>
 <div th:if="${listDetails == null}">
     <p>No details found for this list.</p>
 </div>

@@ -54,8 +54,7 @@ public class ClientController {
         } catch (DuplicateUsernameException e) {
             model.addAttribute("errorMessage", "Username already exists.");
         }
-          return "create-user"; //to keep the new user in some page and successMessage
-//        return "redirect:/users?keyword="+user.getClientName(); // to redirect admin to the list of clients
+          return "create-user";
     }
 
     //Get edit page
@@ -90,14 +89,10 @@ public class ClientController {
 
         } catch (DuplicateEmailException e) {
             model.addAttribute("errorMessage", "Email already exists.");
-//            return "edit-user"; // Redirect back to the edit form with error message
         } catch (DuplicateUsernameException e) {
             model.addAttribute("errorMessage", "Username already exists.");
-//            return "edit-user"; // Redirect back to the edit form with error message
         }
         return "create-user";
-        // Redirect back to the user list page
-//        return "redirect:/users/admin?page="+page+"&keyword="+keyword;
     }
 
     //method handler to handel list of users and return model and view

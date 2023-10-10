@@ -49,14 +49,8 @@ public class HomeController {
         return "home-unauthenticated";
     }
 
-//    @GetMapping("/signin")
-//    public String getLoginPage(Model model) {
-//        return "login";
-//    }
-
     @GetMapping("/logout")
     public String handleLogout(HttpServletRequest request, HttpServletResponse response) {
-        // Perform any additional logout logic if needed
         SecurityContextHolder.clearContext(); // Clear the security context
         HttpSession session = request.getSession(false);
         if (session != null) {

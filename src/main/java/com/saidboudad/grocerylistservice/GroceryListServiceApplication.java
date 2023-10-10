@@ -25,6 +25,55 @@ public class GroceryListServiceApplication {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // Step1 : unsecured app
     //For adding users to my DB via Repository directly.
     //@Bean
@@ -34,7 +83,6 @@ public class GroceryListServiceApplication {
 //            clientRepo.save(client);
 //        };
 //    }
-
 
 
     // Step2 : secured using JdbcUserDetailsManager

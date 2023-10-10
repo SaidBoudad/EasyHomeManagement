@@ -44,7 +44,7 @@
             <ul class="navbar-nav " float-end>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                    <span th:text="${#strings.toLowerCase(#authentication.name)}"></span></a>
+                    <span th:text="${#strings.toLowerCase(#authentication.name)}" style="font-weight: bold;"></span></a>
                     <ul class="dropdown-menu">
                         <li>
                             <form  th:action="@{/logout}">

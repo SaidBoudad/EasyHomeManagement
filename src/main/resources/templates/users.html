@@ -18,12 +18,14 @@
         <div class="row">
             <h1>List Of Users</h1>
         </div>
+
         <div class="row">
             <div class="col-lg-3">
                 <a th:href="@{/users/user/create}" class="btn btn-secondary">Add User</a>
             </div>
             <br>
         </div>
+
         <form th:if="${#authorization.expression('hasRole(''ADMIN'')')}" method="get" th:action="@{/users/admin}">
             <label>User Name</label>
             <input type="text" name="keyword" th:value="${keyword}">
@@ -31,6 +33,7 @@
                 <i class="bi bi-search"></i>
             </button>
         </form>
+
         <table class="table table-dark table-border">
             <thead class="table-dark">
             <tr>
@@ -46,9 +49,6 @@
                 <td th:text="${client.id}"></td>
                 <td th:text="${client.clientName}"></td>
                 <td th:text="${client.email}"></td>
-
-                <!--            th:if="${#authorization.expression('hasRole(''ADMIN'')')}"-->
-
                 <td>
                     <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" class="btn btn-primary"
                        th:href="@{/users/admin/edit(id=${client.id},

@@ -43,12 +43,6 @@ public class ItemController {
         }
     }
 
-
-
-
-
-
-
     @GetMapping("/{itemId}")
     public ResponseEntity<Item> getItem(@PathVariable Long itemId) {
         Item item = itemService.getItemById(itemId);
