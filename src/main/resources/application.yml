@@ -8,7 +8,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://dblistmangementsaidboudad-3.cnuro8frglgi.eu-west-2.rds.amazonaws.com:5432/grocery_list_service
     username: saidboudad
-    password: ******
+    password: 123saidboudad
   jpa:
     hibernate:
       ddl-auto: update
@@ -18,8 +18,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: ***
-    password: ***
+    username: grocerylistmanagement@gmail.com
+    password: ctopuxlxppuebbsx
 
     properties:
       mail:
