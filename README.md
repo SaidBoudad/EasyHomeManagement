@@ -1,36 +1,36 @@
 # EasyHomeManagement
-Creating a web application to manage  grocery stock and budget, along with organizing buying planning, can be a great way to streamline the home management tasks. Here's the plan to get to this:
+Creating a web application to manage  grocery stock and budget, along with organizing buying planning, can be a great way to streamline the home management tasks. Here's the plan to get to this:  
 
-<u>Features and functionalities</u> in this web application. Those are some key features would include:
-**Inventory management:** Tracking the stock of groceries and household items, along with their categories (grocery, health products, furniture, cleaning products, etc.).
-**Budget management:** Allowing as to set and manage our household budget.
-**Low stock reminder:** Automatically reminding when certain items are near to finish.
-**Buying planning:** Suggesting a buying plan based on the budget and priority of items running low.
+<u>Features and functionalities</u> in this web application. Those are some key features would include:  
+**Inventory management:** Tracking the stock of groceries and household items, along with their categories (grocery, health products, furniture, cleaning products, etc.).  
+**Budget management:** Allowing as to set and manage our household budget.  
+**Low stock reminder:** Automatically reminding when certain items are near to finish.  
+**Buying planning:** Suggesting a buying plan based on the budget and priority of items running low.  
 
-<u>Technology Stack:</u> the technologies for in this web application. I used popular web development frameworks **Java17** and **spring boot 3.1.2** , and **thymeleaf** for the frontend.
+<u>Technology Stack:</u> the technologies for in this web application. I used popular web development frameworks **Java17** and **spring boot 3.1.2** , and **thymeleaf** for the frontend.  
 
-***The Backend:*** Implement the backend logic to handle creation of the users account , lists, items , inventory management, budget tracking, and buying planning. This involves creating APIs to interact with the database and handle client requests.
+***The Backend:*** Implement the backend logic to handle creation of the users account , lists, items , inventory management, budget tracking, and buying planning. This involves creating APIs to interact with the database and handle client requests.  
 
-***The Frontend:*** Create a client-friendly and responsive frontend that allows  to manage the inventory, budget, and buying planning to make the app visually appealing. (This frontend will communicate with the API Gateway to access the different functionalities in the futur but now it only part of the the groceryListService).For this purpose the applicatin use Thymeleaf , which is a server-side Java template engine that allows to create dynamic web pages by blending the HTML templates with Java code. It acts as a "motor" or engine for rendering templates, where you can embed dynamic data and expressions directly into your HTML templates using Thymeleaf's syntax. Thymeleaf templates are processed on the server side to generate the final HTML content that is sent to the client's browser. This allows to create dynamic and data-driven web pages without needing to write extensive JavaScript code on the client side, 
+***The Frontend:*** Create a client-friendly and responsive frontend that allows  to manage the inventory, budget, and buying planning to make the app visually appealing. (This frontend will communicate with the API Gateway to access the different functionalities in the futur but now it only part of the the groceryListService).For this purpose the applicatin use Thymeleaf , which is a server-side Java template engine that allows to create dynamic web pages by blending the HTML templates with Java code. It acts as a "motor" or engine for rendering templates, where you can embed dynamic data and expressions directly into your HTML templates using Thymeleaf's syntax. Thymeleaf templates are processed on the server side to generate the final HTML content that is sent to the client's browser. This allows to create dynamic and data-driven web pages without needing to write extensive JavaScript code on the client side.  
 
-***User Authentication:*** the client authentication and authorization to ensure that only authorized users can access and modify the data.The application uses Spring Security choosing to use a custom UserDetailsService, typically making this choice to customize the way Spring Security loads user details (like username, password, and authorities) from the database.
+***User Authentication:*** the client authentication and authorization to ensure that only authorized users can access and modify the data.The application uses Spring Security choosing to use a custom UserDetailsService, typically making this choice to customize the way Spring Security loads user details (like username, password, and authorities) from the database.  
 
-***Design the Database:*** the structure of the database to store information about items, their categories, stock levels, prices, and any other relevant details. A well-organized database will make it easier to retrieve and manipulate data in our application.For this purpose I will use Postgresql 
+***Design the Database:*** the structure of the database to store information about items, their categories, stock levels, prices, and any other relevant details. A well-organized database will make it easier to retrieve and manipulate data in our application.For this purpose I will use Postgresql .  
 
-***Deployment:*** The web hosting service and deployement of the web application is the AWS Cloud Server, to make it accessible online.
+***Deployment:*** The web hosting service and deployement of the web application is the AWS Cloud Server, to make it accessible online.  
 
-**GroceryListService :** is the first microserice of this application aims to be  , which will handle these functionnalities: 
-Creation account: there is 2 kind of account user account , wich give the possibility of create lists and grouping them by category and access the lists in the home page  , adding items to list , modifing list .
-And the second kind of account is the Admin account in which we add to the functionalities of the user account other possiblity to have access to all clients account edit them or delete them.
-Security : The client registration, login, and authentication and the Set up access control and authorization mechanisms is implemented using spring security.For the purpose of loose coupling The application uses 3 table for the spring security to store the users username/passwords/authorities and add to this there is a separate table for the client username and all other properties.
+**GroceryListService :** is the first microserice of this application aims to be  , which will handle these functionnalities:   
+Creation account: there is 2 kind of account user account , wich give the possibility of create lists and grouping them by category and access the lists in the home page  , adding items to list , modifing list .  
+And the second kind of account is the Admin account in which we add to the functionalities of the user account other possiblity to have access to all clients account edit them or delete them.  
+Security : The client registration, login, and authentication and the Set up access control and authorization mechanisms is implemented using spring security.For the purpose of loose coupling The application uses 3 table for the spring security to store the users username/passwords/authorities and add to this there is a separate table for the client username and all other properties.  
 
-**Microservices architecture** for the Easy Home Management application is a good idea, especially if we want to build a scalable, flexible, and maintainable system. Microservices allow us to break down our application into smaller, independent services that can be developed, deployed, and scaled independently. Each microservice can have its own specific functionality and interact with other microservices through APIs. Here's a suggested architecture for our microservices-based home management application:
+**Microservices architecture** for the Easy Home Management application is a good idea, especially if we want to build a scalable, flexible, and maintainable system. Microservices allow us to break down our application into smaller, independent services that can be developed, deployed, and scaled independently. Each microservice can have its own specific functionality and interact with other microservices through APIs. Here's a suggested architecture for our microservices-based home management application:  
 
-***GroceryListService*** This first one can manage two great services which are : 
-Responsible for managing the inventory of the grocery and household items. It will handle adding new items, updating stock levels, and providing information about items nearing completion (Inventory Service).
-Manage the categories of items (grocery, health products, furniture, etc.). This service will provide information about different item categories and can be useful for organizing the inventory (Category Service).
+***GroceryListService*** This first one can manage two great services which are :   
+Responsible for managing the inventory of the grocery and household items. It will handle adding new items, updating stock levels, and providing information about items nearing completion (Inventory Service).  
+Manage the categories of items (grocery, health products, furniture, etc.). This service will provide information about different item categories and can be useful for organizing the inventory (Category Service).  
 
-***API Gateway:*** Implement an API Gateway as the entry point for all client requests. The API Gateway will route incoming requests to the appropriate microservices and handle authentication and authorization.
+***API Gateway:*** Implement an API Gateway as the entry point for all client requests. The API Gateway will route incoming requests to the appropriate microservices and handle authentication and authorization.  
 
 ***Authentication and Authorization Service:*** Create a separate microservice responsible for managing client authentication and authorization. This service will handle client registration, login, and ensure that only authorized users can access certain functionalities.
 
