@@ -5,7 +5,13 @@ Creating a web application to manage  grocery stock and budget, along with organ
 **Inventory management:** Tracking the stock of groceries and household items, along with their categories (grocery, health products, furniture, cleaning products, etc.).  
 **Budget management:** Allowing as to set and manage our household budget.  
 **Low stock reminder:** Automatically reminding when certain items are near to finish.  
-**Buying planning:** Suggesting a buying plan based on the budget and priority of items running low.  
+**Buying planning:** Suggesting a buying plan based on the budget and priority of items running low.   
+
+  **GroceryListService :** is the first microserice of this application aims to be  , which will handle these functionnalities:   
+Creation account: there is 2 kind of account user account , wich give the possibility of create lists and grouping them by category and access the lists in the home page  , adding items to list , modifing list .  
+And the second kind of account is the Admin account in which we add to the functionalities of the user account other possiblity to have access to all clients account edit them or delete them.  
+Security : The client registration, login, and authentication and the Set up access control and authorization mechanisms is implemented using spring security.For the purpose of loose coupling The application uses 3 table for the spring security to store the users username/passwords/authorities and add to this there is a separate table for the client username and all other properties.
+In the context of security Tha application give the functionality to the users that forget thier password to rest it by only giving the username and the email , the link to reset the password send to the email of the user with token expired at 1hour.   
 
 <u>Technology Stack:</u> the technologies for in this web application. I used popular web development frameworks **Java17** and **spring boot 3.1.2** , and **thymeleaf** for the frontend.  
 
@@ -18,12 +24,7 @@ Creating a web application to manage  grocery stock and budget, along with organ
 ***Design the Database:*** the structure of the database to store information about items, their categories, stock levels, prices, and any other relevant details. A well-organized database will make it easier to retrieve and manipulate data in our application.For this purpose I will use Postgresql .  
 
 ***Deployment:*** The web hosting service and deployement of the web application is the AWS Cloud Server, to make it accessible online.  
-
-**GroceryListService :** is the first microserice of this application aims to be  , which will handle these functionnalities:   
-Creation account: there is 2 kind of account user account , wich give the possibility of create lists and grouping them by category and access the lists in the home page  , adding items to list , modifing list .  
-And the second kind of account is the Admin account in which we add to the functionalities of the user account other possiblity to have access to all clients account edit them or delete them.  
-Security : The client registration, login, and authentication and the Set up access control and authorization mechanisms is implemented using spring security.For the purpose of loose coupling The application uses 3 table for the spring security to store the users username/passwords/authorities and add to this there is a separate table for the client username and all other properties.
-In the context of security Tha application give the functionality to the users that forget thier password to rest it by only giving the username and the email , the link to reset the password send to the email of the user with token expired at 1hour.  
+ 
 
 **Microservices architecture** for the Easy Home Management application is a good idea, especially if we want to build a scalable, flexible, and maintainable system. Microservices allow us to break down our application into smaller, independent services that can be developed, deployed, and scaled independently. Each microservice can have its own specific functionality and interact with other microservices through APIs. Here's a suggested architecture for our microservices-based home management application:  
 
