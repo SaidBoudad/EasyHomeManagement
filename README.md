@@ -10,8 +10,8 @@ Creating a web application to manage  grocery stock and budget, along with organ
   **GroceryListService :** is the first microserice of this application aims to be  , which will handle these functionnalities:   
 Creation account: there is 2 kind of account user account , wich give the possibility of create lists and grouping them by category and access the lists in the home page  , adding items to list , modifing list .  
 And the second kind of account is the Admin account in which we add to the functionalities of the user account other possiblity to have access to all clients account edit them or delete them.  
-Security : The client registration, login, and authentication and the Set up access control and authorization mechanisms is implemented using spring security.For the purpose of loose coupling The application uses 3 table for the spring security to store the users username/passwords/authorities and add to this there is a separate table for the client username and all other properties.
-In the context of security Tha application give the functionality to the users that forget thier password to rest it by only giving the username and the email , the link to reset the password send to the email of the user with token expired at 1hour.   
+Security : The client registration, login, and authentication and the Set up access control and authorization mechanisms is implemented using spring security.For the purpose of loose coupling The application uses 3 table for the spring security to store the users username/passwords/authorities and add to this there is a separate table for the client username and all other properties.  
+In the context of security The application gives the functionality to the users that forget thier password to rest it (using JavaMailSender) by only giving the username and the email , the link to reset the password send to the email of the user with token expired at 1hour.   
 
 <u>Technology Stack:</u> the technologies for in this web application. I used popular web development frameworks **Java17** and **spring boot 3.1.2** , and **thymeleaf** for the frontend.  
 
